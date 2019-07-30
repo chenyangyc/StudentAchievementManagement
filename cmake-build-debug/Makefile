@@ -122,6 +122,60 @@ AchievementManagement/fast:
 	$(MAKE) -f CMakeFiles\AchievementManagement.dir\build.make CMakeFiles/AchievementManagement.dir/build
 .PHONY : AchievementManagement/fast
 
+Management.obj: Management.cpp.obj
+
+.PHONY : Management.obj
+
+# target to build an object file
+Management.cpp.obj:
+	$(MAKE) -f CMakeFiles\AchievementManagement.dir\build.make CMakeFiles/AchievementManagement.dir/Management.cpp.obj
+.PHONY : Management.cpp.obj
+
+Management.i: Management.cpp.i
+
+.PHONY : Management.i
+
+# target to preprocess a source file
+Management.cpp.i:
+	$(MAKE) -f CMakeFiles\AchievementManagement.dir\build.make CMakeFiles/AchievementManagement.dir/Management.cpp.i
+.PHONY : Management.cpp.i
+
+Management.s: Management.cpp.s
+
+.PHONY : Management.s
+
+# target to generate assembly for a file
+Management.cpp.s:
+	$(MAKE) -f CMakeFiles\AchievementManagement.dir\build.make CMakeFiles/AchievementManagement.dir/Management.cpp.s
+.PHONY : Management.cpp.s
+
+Student.obj: Student.cpp.obj
+
+.PHONY : Student.obj
+
+# target to build an object file
+Student.cpp.obj:
+	$(MAKE) -f CMakeFiles\AchievementManagement.dir\build.make CMakeFiles/AchievementManagement.dir/Student.cpp.obj
+.PHONY : Student.cpp.obj
+
+Student.i: Student.cpp.i
+
+.PHONY : Student.i
+
+# target to preprocess a source file
+Student.cpp.i:
+	$(MAKE) -f CMakeFiles\AchievementManagement.dir\build.make CMakeFiles/AchievementManagement.dir/Student.cpp.i
+.PHONY : Student.cpp.i
+
+Student.s: Student.cpp.s
+
+.PHONY : Student.s
+
+# target to generate assembly for a file
+Student.cpp.s:
+	$(MAKE) -f CMakeFiles\AchievementManagement.dir\build.make CMakeFiles/AchievementManagement.dir/Student.cpp.s
+.PHONY : Student.cpp.s
+
 main.obj: main.cpp.obj
 
 .PHONY : main.obj
@@ -158,6 +212,12 @@ help:
 	@echo ... AchievementManagement
 	@echo ... edit_cache
 	@echo ... rebuild_cache
+	@echo ... Management.obj
+	@echo ... Management.i
+	@echo ... Management.s
+	@echo ... Student.obj
+	@echo ... Student.i
+	@echo ... Student.s
 	@echo ... main.obj
 	@echo ... main.i
 	@echo ... main.s

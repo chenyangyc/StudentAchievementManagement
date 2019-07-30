@@ -80,6 +80,18 @@
 				</MakeCommands>
 			</Target>
 		</Build>
+		<Unit filename="F:/CLion/CLionProjects/AchievementManagement/Management.cpp">
+			<Option target="AchievementManagement"/>
+		</Unit>
+		<Unit filename="F:/CLion/CLionProjects/AchievementManagement/Management.h">
+			<Option target="AchievementManagement"/>
+		</Unit>
+		<Unit filename="F:/CLion/CLionProjects/AchievementManagement/Student.cpp">
+			<Option target="AchievementManagement"/>
+		</Unit>
+		<Unit filename="F:/CLion/CLionProjects/AchievementManagement/Student.h">
+			<Option target="AchievementManagement"/>
+		</Unit>
 		<Unit filename="F:/CLion/CLionProjects/AchievementManagement/main.cpp">
 			<Option target="AchievementManagement"/>
 		</Unit>

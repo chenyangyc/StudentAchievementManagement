@@ -1,5 +1,7 @@
 file(REMOVE_RECURSE
   "CMakeFiles/AchievementManagement.dir/main.cpp.obj"
+  "CMakeFiles/AchievementManagement.dir/Student.cpp.obj"
+  "CMakeFiles/AchievementManagement.dir/Management.cpp.obj"
   "AchievementManagement.pdb"
   "AchievementManagement.exe"
   "AchievementManagement.exe.manifest"
