@@ -5,6 +5,8 @@
 #include <iostream>
 #include <fstream>
 #include <cstring>
+#include <iomanip>
+#include <map>
 #include "Management.h"
 
 using namespace std;
@@ -22,9 +24,10 @@ void Management::addStudent() {
     cout << "Input the name of the student you want to add: ";
     cin >> s.studentName;
     cout << "Input the math score of the student you want to add: ";
-    cin >> s.studentCourses[0].score;
+    cin >> s.math.score;
     cout << "Input the algorithm score of the student you want to add: ";
-    cin >> s.studentCourses[1].score;
+    cin >> s.algorithm.score;
+    s.studentCourses = {s.math, s.algorithm};
     students.push_back(s);
     cout << "The information of the student you added: " << endl;
     s.display();
@@ -59,65 +62,13 @@ void Management::searchStudents() {
 }
 
 void Management::alter() {
-    char choice;
     Student *student = searchByKeyword();
-    if (student != nullptr) {
-        cout << "Which course do you want to alter? " << endl;
-        cout << "1. math" << endl;
-        cout << "2. algorithm" << endl;
-        cin >> choice;
-        switch (choice){
-            case '1':
-                cout << "Input the math score: ";
-                cin >> student->studentCourses[0].score;
-                break;
-            case '2':
-                cout << "Input the alrorithm score: ";
-                cin >> student->studentCourses[1].score;
-                break;
-            default:
-                cout << "Check your choice!" << endl;
-        }
-        cout << "After altering the score is: " << endl;
-        student->display();
-        store();
-        return;
-    }
-}
-
-void Management::store() {
-    ofstream outfile(R"(F:\CLion\CLionProjects\AchievementManagement\StudentsInfo.txt)");
-    if (!outfile) {
-        cout << "No data!" << endl;
-        return;
-    }
-    for (Student student : students) {
-        outfile << student.studentId << " " << student.studentName << " " << student.studentCourses[0].score << " " << student.studentCourses[1].score << endl;
-    }
-    outfile.close();
-}
-
-void Management::load() {
-    ifstream infile(R"(F:\CLion\CLionProjects\AchievementManagement\StudentsInfo.txt)");
-    if (!infile.is_open()) {
-        cout << "No data!" << endl;
-        return;
-    }
-    string studentId, studentName;
-    Course math, algorithm;
-    vector<Course> courses = {math, algorithm};
-    while (infile >> studentId >> studentName >> courses[0].score >> courses[1].score) {
-        Student student = Student(studentId, studentName, courses);
-        students.push_back(student);
-    }
-    infile.close();
-}
-
-void Management::play() {
-    cout << "ID\t\t Name\t\t Math" << endl;
-    for (Student student: students) {
-        student.display();
-    }
+    Course *courseChosen = chooseCourse(student);
+    cout << "Input the " << courseChosen->courseName << " score: ";
+    cin >> courseChosen->score;
+    cout << "After altering the score is: " << endl;
+    student->display();
+    store();
 }
 
 Student *Management::searchByKeyword() {
@@ -135,9 +86,83 @@ Student *Management::searchByKeyword() {
 }
 
 void Management::searchSingleCourseScores() {
-
+    string searchKeyword;
+    map<string, pair<string, string>> scoreRanking;
+    cout << "Which course do you want to query? " << endl;
+    cin >> searchKeyword;
+    for(Student student: students){
+        for(Course course: student.studentCourses){
+            if(course.searchByCourseName(searchKeyword)){
+                scoreRanking.insert(pair<string,pair<string, string>>(course.score, pair<string,string>(student.studentId, student.studentName)));
+            }
+        }
+    }
+    cout << "All scores of " << searchKeyword << " is : " << endl;
+    for(auto & iter : scoreRanking) {
+        cout << iter.second.second << "\t" << iter.second.first << "\t" << iter.first << endl;
+    }
 }
 
+
+Course *Management::chooseCourse(Student *student) {
+    char choice;
+    Course *courseChosen;
+    cout << "Which course do you want to choose? " << endl;
+    cout << "1. math" << endl;
+    cout << "2. algorithm" << endl;
+    cin >> choice;
+    switch (choice){
+        case '1':
+            courseChosen = &student->studentCourses[0];
+            break;
+        case '2':
+            courseChosen = &student->studentCourses[1];
+            break;
+        default:
+            cout << "Check your choice!" << endl;
+    }
+    return courseChosen;
+}
+
+void Management::store() {
+    ofstream outfile(R"(F:\CLion\CLionProjects\AchievementManagement\StudentsInfo.txt)");
+    if (!outfile) {
+        cout << "No data!" << endl;
+        return;
+    }
+    for (Student student : students) {
+        outfile << student.studentId << " " << student.studentName << " " << student.studentCourses[0].score << " " << student.studentCourses[1].score << endl;
+    }
+    outfile.close();
+}
+
+void Management::load() {
+    Student s;
+    ifstream infile(R"(F:\CLion\CLionProjects\AchievementManagement\StudentsInfo.txt)");
+    if (!infile.is_open()) {
+        cout << "No data!" << endl;
+        return;
+    }
+    string studentId, studentName;
+    vector<Course> courses = {s.math, s.algorithm};
+    while (infile >> studentId >> studentName >> courses[0].score >> courses[1].score) {
+        Student student = Student(studentId, studentName, courses);
+        students.push_back(student);
+    }
+    infile.close();
+}
+
+void Management::play() {
+    cout << "ID\t\t Name\t\t Math" << endl;
+    for (Student student: students) {
+        student.display();
+    }
+}
+
+void Management::getWeightedAchievements() {
+    for()
+
+}
 
 
 

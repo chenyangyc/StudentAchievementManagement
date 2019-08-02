@@ -18,10 +18,12 @@ public:
     void searchStudents();
     Student* searchByKeyword();
     void alter();
+    void searchSingleCourseScores();
+    void getWeightedAchievements();
+    Course *chooseCourse(Student *student);
     void store();
     void load();
     void play();
-    void searchSingleCourseScores();
 };
 
 #endif //ACHIEVEMENTMANAGEMENT_MANAGEMENT_H

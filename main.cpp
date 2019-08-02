@@ -17,6 +17,7 @@ int main()
         cout << "3. Search Students by Id or Name" << endl;
         cout << "4. Delete Students by Id or Name" << endl;
         cout << "5. Alter Scores" << endl;
+        cout << "6. Single Course Ranking" << endl;
         cout << "0. Exit" << endl;
         cout << "Input your choice: ";
         choice = getchar();
@@ -35,6 +36,9 @@ int main()
                 break;
             case '5':
                 management.alter();
+                break;
+            case '6':
+                management.searchSingleCourseScores();
                 break;
             case '0':
                 management.store();

@@ -16,14 +16,13 @@ public:
     string studentName;
     Course math = Course("math", 5);
     Course algorithm = Course("algorithm", 4.5);
-    string mathScore;
-    string algorithmScore;
-    vector<Course> studentCourses = {math,algorithm};
+    vector<Course> studentCourses;
 public:
     explicit Student(string studentId = "0", string studentName = "0", vector<Course> studentCourses = {});
-    void setStudent(string studentId, string studentName, string mathScore, string algorithmScore = "0");
+    void setStudent(string studentId, string studentName);
     bool searchByStudentId(string studentId){return this->studentId == studentId;}
     bool searchByStudentName(string studentName){return this->studentName == studentName;}
+    void initCourses();
     void display();
 };
 
