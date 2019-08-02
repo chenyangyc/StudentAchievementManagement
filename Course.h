@@ -11,11 +11,10 @@ class Course {
 public:
     string courseName;
     double credit;
-    string score;
+    double score;
 public:
     Course(string courseName = "0", double credit = 0);
     bool searchByCourseName(string courseName){return this->courseName == courseName;}
-    void setScore(string myScore);
 };
 
 

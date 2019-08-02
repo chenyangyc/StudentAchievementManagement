@@ -66,6 +66,7 @@ void Management::alter() {
     Course *courseChosen = chooseCourse(student);
     cout << "Input the " << courseChosen->courseName << " score: ";
     cin >> courseChosen->score;
+    getWeightedAchievements();
     cout << "After altering the score is: " << endl;
     student->display();
     store();
@@ -87,13 +88,13 @@ Student *Management::searchByKeyword() {
 
 void Management::searchSingleCourseScores() {
     string searchKeyword;
-    map<string, pair<string, string>> scoreRanking;
+    map<double, pair<string, string>> scoreRanking;
     cout << "Which course do you want to query? " << endl;
     cin >> searchKeyword;
-    for(Student student: students){
+    for(const Student& student: students){
         for(Course course: student.studentCourses){
             if(course.searchByCourseName(searchKeyword)){
-                scoreRanking.insert(pair<string,pair<string, string>>(course.score, pair<string,string>(student.studentId, student.studentName)));
+                scoreRanking.insert(pair<double,pair<string, string>>(course.score, pair<string,string>(student.studentId, student.studentName)));
             }
         }
     }
@@ -102,7 +103,6 @@ void Management::searchSingleCourseScores() {
         cout << iter.second.second << "\t" << iter.second.first << "\t" << iter.first << endl;
     }
 }
-
 
 Course *Management::chooseCourse(Student *student) {
     char choice;
@@ -131,7 +131,9 @@ void Management::store() {
         return;
     }
     for (Student student : students) {
-        outfile << student.studentId << " " << student.studentName << " " << student.studentCourses[0].score << " " << student.studentCourses[1].score << endl;
+        outfile << student.studentId << " " << student.studentName << " "
+        << student.studentCourses[0].score << " " << student.studentCourses[1].score
+        << " " << student.weightedScore <<endl;
     }
     outfile.close();
 }
@@ -143,25 +145,38 @@ void Management::load() {
         cout << "No data!" << endl;
         return;
     }
+    double weightedScore;
     string studentId, studentName;
     vector<Course> courses = {s.math, s.algorithm};
-    while (infile >> studentId >> studentName >> courses[0].score >> courses[1].score) {
-        Student student = Student(studentId, studentName, courses);
+    while (infile >> studentId >> studentName >> courses[0].score >> courses[1].score >> weightedScore) {
+        Student student = Student(studentId, studentName, courses, weightedScore);
         students.push_back(student);
     }
     infile.close();
 }
 
 void Management::play() {
-    cout << "ID\t\t Name\t\t Math" << endl;
+    cout << "ID" << setw(16) <<  "Name" << setw(12) <<  "Math" << setw(12) << "Algorithm"<< setw(12) << "Weighted Achievements" << setw(12) << endl;
     for (Student student: students) {
         student.display();
     }
 }
 
 void Management::getWeightedAchievements() {
-    for()
-
+    for(Student &student: students){
+        double weightedScore = 0;
+        double creditSum = 0;
+        for(const Course& course: student.studentCourses){
+            creditSum += course.credit;
+        }
+        for(const Course& course: student.studentCourses){
+            double weights = course.credit / creditSum;
+            weightedScore += course.score * weights;
+        }
+        student.weightedScore = weightedScore;
+        student.display();
+    }
+    store();
 }
 
 

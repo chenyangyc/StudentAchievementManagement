@@ -18,6 +18,7 @@ int main()
         cout << "4. Delete Students by Id or Name" << endl;
         cout << "5. Alter Scores" << endl;
         cout << "6. Single Course Ranking" << endl;
+        cout << "7. Get Weighted Scores" << endl;
         cout << "0. Exit" << endl;
         cout << "Input your choice: ";
         choice = getchar();
@@ -39,6 +40,9 @@ int main()
                 break;
             case '6':
                 management.searchSingleCourseScores();
+                break;
+            case '7':
+                management.getWeightedAchievements();
                 break;
             case '0':
                 management.store();

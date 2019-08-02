@@ -12,8 +12,3 @@ Course::Course(string courseName, double credit) {
     this->courseName = courseName;
     this->credit = credit;
 }
-
-
-void Course::setScore(string score) {
-    this->score = score;
-}
