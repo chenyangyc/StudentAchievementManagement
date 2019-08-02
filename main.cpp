@@ -6,7 +6,6 @@ using namespace std;
 int main()
 {
     //TODO: quite a lot of work
-    Student student;
     Management management;
     management.load();
     int n = 1000;
@@ -14,16 +13,16 @@ int main()
     string mathScore;
     while(n--){
         cout << "1. Add students" << endl;
-        cout << "2. Show Information" << endl;
+        cout << "2. Show All Students' Information" << endl;
         cout << "3. Search Students by Id or Name" << endl;
-        cout << "4. Delete according to the id" << endl;
-        cout << "5. Alter according to the id" << endl;
+        cout << "4. Delete Students by Id or Name" << endl;
+        cout << "5. Alter Scores" << endl;
         cout << "0. Exit" << endl;
         cout << "Input your choice: ";
         choice = getchar();
         switch (choice){
             case '1':
-                management.addStudent(student);
+                management.addStudent();
                 break;
             case '2':
                 management.play();

@@ -9,10 +9,10 @@
 
 using namespace std;
 
-void Management::addStudent(Student &s) {
+void Management::addStudent() {
+    Student s;
     cout << "Input the id of the student you want to add: ";
     cin >> s.studentId;
-    cout << "heha" << endl;
     for (Student student: students) {
         if (student.searchByStudentId(s.studentId)) {
             cout << "This has been added before!" << endl;
@@ -22,7 +22,9 @@ void Management::addStudent(Student &s) {
     cout << "Input the name of the student you want to add: ";
     cin >> s.studentName;
     cout << "Input the math score of the student you want to add: ";
-    cin >> s.mathScore;
+    cin >> s.studentCourses[0].score;
+    cout << "Input the algorithm score of the student you want to add: ";
+    cin >> s.studentCourses[1].score;
     students.push_back(s);
     cout << "The information of the student you added: " << endl;
     s.display();
@@ -45,7 +47,6 @@ void Management::deleteStudents() {
     cout << "No such student! Check your keyword!" << endl;
 }
 
-
 void Management::searchStudents() {
     string mathScore;
     Student *student = searchByKeyword();
@@ -55,47 +56,33 @@ void Management::searchStudents() {
         store();
         return;
     }
-//    string searchKeyword;
-//    cout << "Input the id or name you want to search: ";
-//    cin >> searchKeyword;
-//    for (Student &student: students) {
-//        if (student.searchByStudentId(searchKeyword) || student.searchByStudentName(searchKeyword)) {
-//            cout << "The information you are looking for is: " << endl;
-//            student.display();
-//            store();
-//            return;
-//        }
-//    }
-//    cout << "No such student! Check your keyword!" << endl;
 }
 
 void Management::alter() {
-    string mathScore;
+    char choice;
     Student *student = searchByKeyword();
     if (student != nullptr) {
-        cout << "Input the math score: ";
-        cin >> mathScore;
-        student->mathScore = mathScore;
+        cout << "Which course do you want to alter? " << endl;
+        cout << "1. math" << endl;
+        cout << "2. algorithm" << endl;
+        cin >> choice;
+        switch (choice){
+            case '1':
+                cout << "Input the math score: ";
+                cin >> student->studentCourses[0].score;
+                break;
+            case '2':
+                cout << "Input the alrorithm score: ";
+                cin >> student->studentCourses[1].score;
+                break;
+            default:
+                cout << "Check your choice!" << endl;
+        }
         cout << "After altering the score is: " << endl;
         student->display();
         store();
         return;
     }
-//    string searchKeyword;
-//    cout << "Input the id or name of the student you want to alter: ";
-//    cin >> searchKeyword;
-//    for(Student& student: students) {
-//        if (student.searchByStudentId(searchKeyword) || student.searchByStudentName(searchKeyword)) {
-//            cout << "Input the math score: ";
-//            cin >> mathScore;
-//            student.mathScore = mathScore;
-//            cout << "After altering the score is: " << endl;
-//            student.display();
-//            store();
-//            return;
-//        }
-//    }
-//    cout << "No such student! Check your keyword!" << endl;
 }
 
 void Management::store() {
@@ -105,7 +92,7 @@ void Management::store() {
         return;
     }
     for (Student student : students) {
-        outfile << student.studentId << " " << student.studentName << " " << student.mathScore << endl;
+        outfile << student.studentId << " " << student.studentName << " " << student.studentCourses[0].score << " " << student.studentCourses[1].score << endl;
     }
     outfile.close();
 }
@@ -116,9 +103,11 @@ void Management::load() {
         cout << "No data!" << endl;
         return;
     }
-    string studentId, studentName, mathScore;
-    while (infile >> studentId >> studentName >> mathScore) {
-        Student student = Student(studentId, studentName, mathScore);
+    string studentId, studentName;
+    Course math, algorithm;
+    vector<Course> courses = {math, algorithm};
+    while (infile >> studentId >> studentName >> courses[0].score >> courses[1].score) {
+        Student student = Student(studentId, studentName, courses);
         students.push_back(student);
     }
     infile.close();
@@ -143,6 +132,10 @@ Student *Management::searchByKeyword() {
     }
     cout << "No such student! Check your keyword!" << endl;
     return nullptr;
+}
+
+void Management::searchSingleCourseScores() {
+
 }
 
 

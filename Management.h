@@ -13,7 +13,7 @@ protected:
     vector<Student> students;
 public:
     Management()= default;
-    void addStudent(Student &s);
+    void addStudent();
     void deleteStudents();
     void searchStudents();
     Student* searchByKeyword();
@@ -21,6 +21,7 @@ public:
     void store();
     void load();
     void play();
+    void searchSingleCourseScores();
 };
 
 #endif //ACHIEVEMENTMANAGEMENT_MANAGEMENT_H

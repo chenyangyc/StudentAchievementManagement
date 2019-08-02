@@ -122,6 +122,33 @@ AchievementManagement/fast:
 	$(MAKE) -f CMakeFiles\AchievementManagement.dir\build.make CMakeFiles/AchievementManagement.dir/build
 .PHONY : AchievementManagement/fast
 
+Course.obj: Course.cpp.obj
+
+.PHONY : Course.obj
+
+# target to build an object file
+Course.cpp.obj:
+	$(MAKE) -f CMakeFiles\AchievementManagement.dir\build.make CMakeFiles/AchievementManagement.dir/Course.cpp.obj
+.PHONY : Course.cpp.obj
+
+Course.i: Course.cpp.i
+
+.PHONY : Course.i
+
+# target to preprocess a source file
+Course.cpp.i:
+	$(MAKE) -f CMakeFiles\AchievementManagement.dir\build.make CMakeFiles/AchievementManagement.dir/Course.cpp.i
+.PHONY : Course.cpp.i
+
+Course.s: Course.cpp.s
+
+.PHONY : Course.s
+
+# target to generate assembly for a file
+Course.cpp.s:
+	$(MAKE) -f CMakeFiles\AchievementManagement.dir\build.make CMakeFiles/AchievementManagement.dir/Course.cpp.s
+.PHONY : Course.cpp.s
+
 Management.obj: Management.cpp.obj
 
 .PHONY : Management.obj
@@ -212,6 +239,9 @@ help:
 	@echo ... AchievementManagement
 	@echo ... edit_cache
 	@echo ... rebuild_cache
+	@echo ... Course.obj
+	@echo ... Course.i
+	@echo ... Course.s
 	@echo ... Management.obj
 	@echo ... Management.i
 	@echo ... Management.s

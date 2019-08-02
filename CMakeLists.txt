@@ -3,4 +3,4 @@ project(AchievementManagement)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_executable(AchievementManagement main.cpp Student.cpp Student.h Management.cpp Management.h)
+add_executable(AchievementManagement main.cpp Student.cpp Student.h Management.cpp Management.h Course.cpp Course.h)
