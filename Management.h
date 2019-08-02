@@ -15,7 +15,8 @@ public:
     Management()= default;
     void addStudent(Student &s);
     void deleteStudents();
-    void seek();
+    void searchStudents();
+    Student* searchByKeyword();
     void alter();
     void store();
     void load();

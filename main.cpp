@@ -13,10 +13,9 @@ int main()
     char choice;
     string mathScore;
     while(n--){
-        system("cls");
         cout << "1. Add students" << endl;
         cout << "2. Show Information" << endl;
-        cout << "3. Search according to the id" << endl;
+        cout << "3. Search Students by Id or Name" << endl;
         cout << "4. Delete according to the id" << endl;
         cout << "5. Alter according to the id" << endl;
         cout << "0. Exit" << endl;
@@ -30,7 +29,7 @@ int main()
                 management.play();
                 break;
             case '3':
-                management.seek();
+                management.searchStudents();
                 break;
             case '4':
                 management.deleteStudents();

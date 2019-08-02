@@ -17,7 +17,8 @@ public:
     explicit Student(string studentId = "0", string studentName = "0", string mathScore = "0");
     void setStudent(string studentId, string studentName, string mathScore);
     void setMath(string mathScore)  {this->mathScore = mathScore;}
-    bool search(string studentId){return this->studentId == studentId;}
+    bool searchByStudentId(string studentId){return this->studentId == studentId;}
+    bool searchByStudentName(string studentName){return this->studentName == studentName;}
     void display();
 };
 

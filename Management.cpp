@@ -4,14 +4,17 @@
 
 #include <iostream>
 #include <fstream>
+#include <cstring>
 #include "Management.h"
+
 using namespace std;
 
 void Management::addStudent(Student &s) {
     cout << "Input the id of the student you want to add: ";
     cin >> s.studentId;
-    for(Student student: students){
-        if(student.search(s.studentId)){
+    cout << "heha" << endl;
+    for (Student student: students) {
+        if (student.searchByStudentId(s.studentId)) {
             cout << "This has been added before!" << endl;
             return;
         }
@@ -23,71 +26,98 @@ void Management::addStudent(Student &s) {
     students.push_back(s);
     cout << "The information of the student you added: " << endl;
     s.display();
-}
-
-void Management::deleteStudents() {
-    string studentId;
-    cout << "Input the id of the student you want to delete: ";
-    cin >> studentId;
-    for(int i = 0; i < students.size(); i++ ){
-        if(students[i].search(studentId)){
-            students.erase(students.begin() + i);
-        }
-    }
-    cout << "Deleted Successfully!" << endl;
     store();
 }
 
-void Management::seek() {
-    string studentId;
-    cout << "Input the id you want to search: ";
-    cin >> studentId;
-    for(Student student: students){
-        if(student.search(studentId)){
-            cout << "The information you are looking for is: " << endl;
-            student.display();
-            break;
+void Management::deleteStudents() {
+    string mathScore;
+    string searchKeyword;
+    cout << "Input the id or name of the student you want to delete: ";
+    cin >> searchKeyword;
+    for (int i = 0; i < students.size(); i++) {
+        if (students[i].searchByStudentId(searchKeyword) || students[i].searchByStudentName(searchKeyword)) {
+            students.erase(students.begin() + i);
+            cout << "Deleted Successfully!" << endl;
+            store();
+            return;
         }
     }
-    cout << "No such id." << endl;
+    cout << "No such student! Check your keyword!" << endl;
+}
+
+
+void Management::searchStudents() {
+    string mathScore;
+    Student *student = searchByKeyword();
+    if(student != nullptr){
+        cout << "The information you are looking for is: " << endl;
+        student->display();
+        store();
+        return;
+    }
+//    string searchKeyword;
+//    cout << "Input the id or name you want to search: ";
+//    cin >> searchKeyword;
+//    for (Student &student: students) {
+//        if (student.searchByStudentId(searchKeyword) || student.searchByStudentName(searchKeyword)) {
+//            cout << "The information you are looking for is: " << endl;
+//            student.display();
+//            store();
+//            return;
+//        }
+//    }
+//    cout << "No such student! Check your keyword!" << endl;
 }
 
 void Management::alter() {
-    string studentId;
     string mathScore;
-    cout << "Input the id of the student who needs altering: ";
-    cin >> studentId;
-    for(Student student: students){
-        if(student.search(studentId)){
-            cout << "Input the math score: ";
-            cin >> mathScore;
-            student.mathScore = mathScore;
-            cout << "After altering the score is: " << endl;
-            student.display();
-        }
+    Student *student = searchByKeyword();
+    if (student != nullptr) {
+        cout << "Input the math score: ";
+        cin >> mathScore;
+        student->mathScore = mathScore;
+        cout << "After altering the score is: " << endl;
+        student->display();
+        store();
+        return;
     }
+//    string searchKeyword;
+//    cout << "Input the id or name of the student you want to alter: ";
+//    cin >> searchKeyword;
+//    for(Student& student: students) {
+//        if (student.searchByStudentId(searchKeyword) || student.searchByStudentName(searchKeyword)) {
+//            cout << "Input the math score: ";
+//            cin >> mathScore;
+//            student.mathScore = mathScore;
+//            cout << "After altering the score is: " << endl;
+//            student.display();
+//            store();
+//            return;
+//        }
+//    }
+//    cout << "No such student! Check your keyword!" << endl;
 }
 
 void Management::store() {
-    ofstream outfile("StudentsInfo.txt");
-    if(! outfile){
+    ofstream outfile(R"(F:\CLion\CLionProjects\AchievementManagement\StudentsInfo.txt)");
+    if (!outfile) {
         cout << "No data!" << endl;
         return;
     }
-    for(Student student : students){
+    for (Student student : students) {
         outfile << student.studentId << " " << student.studentName << " " << student.mathScore << endl;
     }
     outfile.close();
 }
 
 void Management::load() {
-    ifstream infile("StudentsInfo.txt");
-    if(!infile){
+    ifstream infile(R"(F:\CLion\CLionProjects\AchievementManagement\StudentsInfo.txt)");
+    if (!infile.is_open()) {
         cout << "No data!" << endl;
         return;
     }
     string studentId, studentName, mathScore;
-    while(infile >> studentId >> studentName >> mathScore){
+    while (infile >> studentId >> studentName >> mathScore) {
         Student student = Student(studentId, studentName, mathScore);
         students.push_back(student);
     }
@@ -95,8 +125,54 @@ void Management::load() {
 }
 
 void Management::play() {
-    cout << "ID\t Name\t Math" << endl;
-    for(Student student: students){
+    cout << "ID\t\t Name\t\t Math" << endl;
+    for (Student student: students) {
         student.display();
     }
 }
+
+Student *Management::searchByKeyword() {
+    string searchKeyword;
+    cout << "Input the id or name of the student you want to deal with: ";
+    cin >> searchKeyword;
+    for (Student &student: students) {
+        if (student.searchByStudentId(searchKeyword) || student.searchByStudentName(searchKeyword)) {
+            Student *studentPtr = &student;
+            return studentPtr;
+        }
+    }
+    cout << "No such student! Check your keyword!" << endl;
+    return nullptr;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
