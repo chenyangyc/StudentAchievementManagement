@@ -9,35 +9,72 @@
 #define ERROR -1;
 using namespace std;
 
-Student::Student(int courseNum, string studentId, string studentName, vector<Course> studentCourses, double weightedScore) {
+Student::Student(int courseNum, string studentId, string studentName, vector<Course> studentCourses,
+                 double weightedScore,
+                 double creditsSum) {
     this->courseNum = courseNum;
     this->studentId = studentId;
     this->studentName = studentName;
     this->studentCourses = studentCourses;
     this->weightedScore = weightedScore;
+    this->creditsSum = creditsSum;
+}
+
+void Student::setWeightedScore() {
+    double countingScore = 0;
+    for (Course &course: studentCourses) {
+        double weight = course.credit / creditsSum;
+        countingScore += course.getScore() * weight;
+    }
+    this->weightedScore = countingScore;
+}
+
+double Student::getWeightedScore() {
+    return this->weightedScore;
+}
+
+void Student::setCreditsSum() {
+    double creditSum = 0;
+    for (const Course &course: studentCourses) {
+        creditSum += course.credit;
+    }
+    this->creditsSum = creditSum;
+}
+
+double Student::getCreditsSum() {
+    return this->creditsSum;
+}
+
+void Student::setGpa() {
+    this->Gpa = 0;
+    for (int i = 0; i < studentCourses.size(); i++) {
+        this->Gpa += studentCourses[i].getGpa() * studentCourses[i].credit / creditsSum;
+    }
+}
+
+double Student::getGpa() {
+    return this->Gpa;
+}
+
+void Student::addCourseToList(Course &course) {
+    course.setGpa();
+    this->studentCourses.push_back(course);
+}
+
+Course *Student::getCourseFromList(int i) {
+    if (i >= 0 && i < studentCourses.size())
+        return &studentCourses[i];
+    return nullptr;
 }
 
 double Student::getSingleCourseScore(const string &courseName) {
     for (Course course: studentCourses) {
         if (course.searchByCourseName(courseName)) {
-            return course.score;
+            return course.getScore();
         }
     }
     cout << "没有这门课程，请检查您的关键字拼写" << endl;
     return ERROR
-}
-
-void Student::countWeightedScore() {
-    double creditSum = 0;
-    double countingScore = 0;
-    for (const Course &course: studentCourses) {
-        creditSum += course.credit;
-    }
-    for (const Course &course: studentCourses) {
-        double weight = course.credit / creditSum;
-        countingScore += course.score * weight;
-        this->weightedScore = countingScore;
-    }
 }
 
 bool Student::searchByStudentId(string studentId) {
@@ -60,21 +97,12 @@ Course *Student::getSingleCourse() {
     int choice;
     Course *courseChosen = nullptr;
     cout << "您想要选择哪门课程? " << endl;
-    for(int i = 0; i < studentCourses.size(); i++){
+    for (int i = 0; i < studentCourses.size(); i++) {
         cout << i + 1 << "." << studentCourses[i].courseName << endl;
     }
     cin >> choice;
+    if (choice < 1 || choice > studentCourses.size()) return nullptr;
     courseChosen = &studentCourses[choice - 1];
-//    switch (choice){
-//        case 1:
-//            courseChosen = &studentCourses[0];
-//            break;
-//        case 2:
-//            courseChosen = &studentCourses[1];
-//            break;
-//        default:
-//            cout << "Check your choice!" << endl;
-//    }
     return courseChosen;
 }
 
@@ -82,11 +110,10 @@ void Student::display() {
     cout << "学生姓名：" << studentName << "\t";
     cout << "学号：" << studentId << endl;
     cout << " 科目" << setw(8) << "学分" << setw(8) << "成绩" << setw(8) << "绩点" << endl;
-    for (const Course &course: studentCourses) {
-        cout << course.courseName << setw(8) << course.credit << setw(8) << course.score << setw(8) << endl;
+    for (Course &course: studentCourses) {
+        cout << course.courseName << setw(8) << course.credit << setw(8) << course.getScore() << setw(8)
+             << course.getGpa() << setw(8) << endl;
     }
-    cout << "加权成绩：" << weightedScore << endl;
+    cout << "加权成绩：" << weightedScore << "\t" << "总绩点：" << Gpa << "\t" << "总学分: " << creditsSum << endl;
     cout << endl;
 }
-
-

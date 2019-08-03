@@ -12,11 +12,20 @@ using namespace std;
 class Course {
 public:
     string courseName;
-    double credit;
+    double credit, gpaSum;
+    int num;
+private:
     double score;
+    double gpa;
 public:
     explicit Course(string courseName = "0", double credit = 0);
+    void setGpa();
+    double getGpa();
+    void setScore(double score);
+    double getScore();
     bool searchByCourseName(const string &searchName);
+    bool operator <(const Course& c) const;
+
 };
 
 

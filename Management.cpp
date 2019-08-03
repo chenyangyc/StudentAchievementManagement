@@ -30,10 +30,24 @@ void Management::addStudent() {
     cin >> s.courseNum;
     for(int i = 0; i < s.courseNum; i++) {
         cout << "依次输入课程名称，学分和成绩（以空格隔开）: ";
-        cin >> course.courseName >> course.credit >> course.score;
-        s.studentCourses.push_back(course);
+        double score;
+        cin >> course.courseName >> course.credit >> score;
+        course.setScore(score);
+        s.addCourseToList(course);
+        if(courses.find(course.courseName) == courses.end()){
+            courses[course.courseName] = course;
+            courses[course.courseName].num = 1;
+            courses[course.courseName].gpaSum = course.getGpa();
+        } else {
+            score += courses[course.courseName].getScore();
+            courses[course.courseName].setScore(score);
+            courses[course.courseName].num++;
+            courses[course.courseName].gpaSum += course.getGpa();
+        }
     }
-    s.countWeightedScore();
+    s.setCreditsSum();
+    s.setWeightedScore();
+    s.setGpa();
     students.push_back(s);
     cout << "您添加的学生信息为: " << endl;
     s.display();
@@ -56,6 +70,7 @@ void Management::showSingleStudent() {
     Student *student = searchStudentByKeyword();
     if (student != nullptr) {
         cout << "----------您查询的学生信息---------- " << endl;
+        cout << endl;
         student->display();
         storeFile();
         return;
@@ -83,15 +98,21 @@ void Management::alterScore() {
     Course *courseChosen = student->getSingleCourse();
     if(courseChosen == nullptr)  return;
     cout << "输入新的" << courseChosen->courseName << "成绩: ";
-    cin >> courseChosen->score;
-    student->countWeightedScore();
+    double score;
+    cin >> score;
+    courseChosen->setScore(score);
+    courseChosen->setGpa();
+    student->setWeightedScore();
+    student->setGpa();
     cout << "修改后的该生信息为: " << endl;
     student->display();
     storeFile();
 }
 
-bool cmp(const Student &a, const Student &b) {
-    return a.weightedScore > b.weightedScore;
+bool cmp(Student &a, Student &b) {
+    double aws = a.getWeightedScore();
+    double bws = b.getWeightedScore();
+    return aws > bws;
 }
 
 bool singleCmp(pair<pair<string, string>, double> &a, pair<pair<string, string>, double> &b) {
@@ -115,6 +136,7 @@ void Management::getRankingBySingleCourseScore() {
     }
     sort(sortedScores.begin(), sortedScores.end(), singleCmp);
     cout << "----------" << searchKeyword << "的成绩排名----------" << endl;
+    cout << endl;
     cout << "学号\t" << "姓名\t" << "成绩\t" << endl;
     for (auto &iter : sortedScores) {
         cout << iter.first.first << "\t" << iter.first.second << "\t" << iter.second << endl;
@@ -124,13 +146,18 @@ void Management::getRankingBySingleCourseScore() {
 void Management::getRankingByWeightedScore() {
     vector<Student> sortedStudents;
     for (Student &student: students) {
-        student.countWeightedScore();
+        student.setWeightedScore();
+        student.setGpa();
         sortedStudents.push_back(student);
     }
     sort(sortedStudents.begin(), sortedStudents.end(), cmp);
+    cout << "----------加权成绩排名----------" << endl;
+    cout << endl;
+    cout << "学号\t" << "姓名\t" << "加权成绩\t" << "平均绩点" << endl;
     for (auto &student: sortedStudents) {
-        cout << student.studentId << "\t" << student.studentName << "\t" << student.weightedScore << endl;
+        cout << student.studentId << "\t" << student.studentName << "\t" << student.getWeightedScore() << "\t" << student.getGpa() << endl;
     }
+    storeFile();
 }
 
 void Management::storeFile() {
@@ -141,13 +168,13 @@ void Management::storeFile() {
     }
     for (int i = 0; i < students.size(); i++) {
         outfile << students[i].studentId << " " << students[i].studentName << " " << students[i].courseNum << " ";
-        for(int j = 0; j < students[j].courseNum; j++){
-            outfile << students[i].studentCourses[j].courseName << " " << students[i].studentCourses[j].credit << " " << students[i].studentCourses[j].score << " ";
+        for(int j = 0; j < students[i].courseNum; j++){
+            outfile << students[i].getCourseFromList(j)->courseName << " " << students[i].getCourseFromList(j)->credit << " " << students[i].getCourseFromList(j)->getScore() << " ";
         }
         if(i == students.size() - 1){
-            outfile << students[i].weightedScore;
+            outfile << students[i].getWeightedScore() << " " << students[i].getCreditsSum();
         } else{
-            outfile << students[i].weightedScore << endl;
+            outfile << students[i].getWeightedScore() << " " << students[i].getCreditsSum() << endl;
         }
     }
     outfile.close();
@@ -160,31 +187,58 @@ void Management::loadFile() {
         cout << "No data!" << endl;
         return;
     }
-    int coursesNum;
-    double weightedScore;
+    int coursesNumbers;
+    double weightedScore,creditSum;
     string studentId, studentName;
     Course course;
-    vector<Course> courses;
+    vector<Course> tempCourses;
 
     while(!infile.eof()){
-        infile >> studentId >> studentName >> coursesNum;
-        for(int i = 0; i < coursesNum; i++) {
-            infile >> course.courseName >> course.credit >> course.score;
-            courses.push_back(course);
+        infile >> studentId >> studentName >> coursesNumbers;
+        for(int i = 0; i < coursesNumbers; i++) {
+            double score;
+            infile >> course.courseName >> course.credit >> score;
+            course.setScore(score);
+            course.setGpa();
+            tempCourses.push_back(course);
+            if(courses.find(course.courseName) == courses.end()){
+                courses[course.courseName] = course;
+                courses[course.courseName].num = 1;
+                courses[course.courseName].gpaSum = course.getGpa();
+            } else {
+                score += courses[course.courseName].getScore();
+                courses[course.courseName].setScore(score);
+                courses[course.courseName].num++;
+                courses[course.courseName].gpaSum += course.getGpa();
+            }
         }
-        infile >> weightedScore;
-        Student student = Student(coursesNum, studentId, studentName, courses, weightedScore);
+        infile >> weightedScore >> creditSum;
+        Student student = Student(coursesNumbers, studentId, studentName, tempCourses, weightedScore, creditSum);
         students.push_back(student);
-        courses.clear();
+        tempCourses.clear();
     }
     infile.close();
 }
 
 void Management::showAllStudents() {
     cout << "----------所有学生成绩统计----------" << endl;
-    for (Student student: students) {
+    cout << endl;
+    for (Student& student: students) {
+        student.setGpa();
         student.display();
     }
 }
 
-
+void Management::showAllCourses() {
+    cout << "----------所有科目信息统计----------" << endl;
+    cout << endl;
+    map<string, Course>::iterator iter;
+    for (iter = courses.begin(); iter != courses.end(); iter++) {
+        double averageScore = iter->second.getScore() / iter->second.num;
+        iter->second.setScore(averageScore);
+        cout << "科目名称：" << iter->first << "\t" << "科目学分：" << iter->second.credit << endl;
+        cout << "年纪平均成绩: " << averageScore << "\t";
+        cout << "年级平均绩点：" << iter->second.gpaSum / iter->second.num << endl;
+        cout << endl;
+    }
+}

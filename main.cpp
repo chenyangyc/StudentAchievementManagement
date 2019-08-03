@@ -13,12 +13,13 @@ int main()
     string mathScore;
     while(n--){
         cout << "1. 添加学生" << endl;
-        cout << "2. 展示所有学生的信息" << endl;
+        cout << "2. 展示所有学生信息" << endl;
         cout << "3. 通过姓名或学号查询学生信息" << endl;
         cout << "4. 通过姓名或学号删除学生信息" << endl;
-        cout << "5. 修改某学生成绩" << endl;
-        cout << "6. 单科成绩排名" << endl;
-        cout << "7. 加权成绩排名" << endl;
+        cout << "5. 修改学生成绩" << endl;
+        cout << "6. 查看单科成绩排名" << endl;
+        cout << "7. 查看加权成绩排名" << endl;
+        cout << "8. 查看所有科目信息" << endl;
         cout << "0. 安全退出" << endl;
         cout << "请输入您的选择: ";
         choice = getchar();
@@ -43,6 +44,9 @@ int main()
                 break;
             case '7':
                 management.getRankingByWeightedScore();
+                break;
+            case '8':
+                management.showAllCourses();
                 break;
             case '0':
                 management.storeFile();

@@ -6,11 +6,14 @@
 #define ACHIEVEMENTMANAGEMENT_MANAGEMENT_H
 
 #include <vector>
+#include <map>
 #include "Student.h"
 
 class Management {
 protected:
     vector<Student> students;
+    map<string, int> coursesNum;
+    map<string, Course> courses;
 public:
     Management()= default;
     void addStudent();
@@ -23,6 +26,7 @@ public:
     void storeFile();
     void loadFile();
     void showAllStudents();
+    void showAllCourses();
 };
 
 #endif //ACHIEVEMENTMANAGEMENT_MANAGEMENT_H
