@@ -4,7 +4,9 @@
 
 #ifndef ACHIEVEMENTMANAGEMENT_COURSE_H
 #define ACHIEVEMENTMANAGEMENT_COURSE_H
+
 #include <string>
+
 using namespace std;
 
 class Course {
@@ -13,8 +15,8 @@ public:
     double credit;
     double score;
 public:
-    Course(string courseName = "0", double credit = 0);
-    bool searchByCourseName(string courseName){return this->courseName == courseName;}
+    explicit Course(string courseName = "0", double credit = 0);
+    bool searchByCourseName(const string &searchName);
 };
 
 

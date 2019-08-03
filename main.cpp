@@ -27,19 +27,19 @@ int main()
                 management.addStudent();
                 break;
             case '2':
-                management.play();
+                management.showAllStudents();
                 break;
             case '3':
-                management.searchStudents();
+                management.showSingleStudent();
                 break;
             case '4':
-                management.deleteStudents();
+                management.deleteStudent();
                 break;
             case '5':
-                management.alter();
+                management.alterScore();
                 break;
             case '6':
-                management.searchSingleCourseScores();
+                management.showSingleCourseScores();
                 break;
             case '7':
                 management.getWeightedAchievements();

@@ -34,13 +34,33 @@ void Management::addStudent() {
     store();
 }
 
-void Management::deleteStudents() {
-    string mathScore;
+Student *Management::searchStudentByKeyword() {
+    string searchKeyword;
+    cout << "Input the id or name of the student you want to deal with: ";
+    cin >> searchKeyword;
+    for (Student &student: students) {
+        Student* studentPtr = student.searchStudentByKeyword(searchKeyword);
+        if(studentPtr != nullptr)   return studentPtr;
+    }
+    return nullptr;
+}
+
+void Management::showSingleStudent() {
+    Student *student = searchStudentByKeyword();
+    if(student != nullptr){
+        cout << "The information you are looking for is: " << endl;
+        student->display();
+        store();
+        return;
+    }
+}
+
+void Management::deleteStudent() {
     string searchKeyword;
     cout << "Input the id or name of the student you want to delete: ";
     cin >> searchKeyword;
     for (int i = 0; i < students.size(); i++) {
-        if (students[i].searchByStudentId(searchKeyword) || students[i].searchByStudentName(searchKeyword)) {
+        if (students[i].searchStudentByKeyword(searchKeyword)) {
             students.erase(students.begin() + i);
             cout << "Deleted Successfully!" << endl;
             store();
@@ -50,20 +70,9 @@ void Management::deleteStudents() {
     cout << "No such student! Check your keyword!" << endl;
 }
 
-void Management::searchStudents() {
-    string mathScore;
-    Student *student = searchByKeyword();
-    if(student != nullptr){
-        cout << "The information you are looking for is: " << endl;
-        student->display();
-        store();
-        return;
-    }
-}
-
-void Management::alter() {
-    Student *student = searchByKeyword();
-    Course *courseChosen = chooseCourse(student);
+void Management::alterScore() {
+    Student *student = searchStudentByKeyword();
+    Course *courseChosen = student->getSingleCourse();
     cout << "Input the " << courseChosen->courseName << " score: ";
     cin >> courseChosen->score;
     getWeightedAchievements();
@@ -72,31 +81,14 @@ void Management::alter() {
     store();
 }
 
-Student *Management::searchByKeyword() {
+void Management::showSingleCourseScores() {
     string searchKeyword;
-    cout << "Input the id or name of the student you want to deal with: ";
-    cin >> searchKeyword;
-    for (Student &student: students) {
-        if (student.searchByStudentId(searchKeyword) || student.searchByStudentName(searchKeyword)) {
-            Student *studentPtr = &student;
-            return studentPtr;
-        }
-    }
-    cout << "No such student! Check your keyword!" << endl;
-    return nullptr;
-}
-
-void Management::searchSingleCourseScores() {
-    string searchKeyword;
-    map<double, pair<string, string>> scoreRanking;
     cout << "Which course do you want to query? " << endl;
     cin >> searchKeyword;
-    for(const Student& student: students){
-        for(Course course: student.studentCourses){
-            if(course.searchByCourseName(searchKeyword)){
-                scoreRanking.insert(pair<double,pair<string, string>>(course.score, pair<string,string>(student.studentId, student.studentName)));
-            }
-        }
+    map<double, pair<string, string>> scoreRanking;
+    for(Student student: students){
+        double score = student.getSingleCourseScore(searchKeyword);
+        scoreRanking.insert(pair<double,pair<string, string>>(score, pair<string,string>(student.studentId, student.studentName)));
     }
     cout << "All scores of " << searchKeyword << " is : " << endl;
     for(auto & iter : scoreRanking) {
@@ -104,24 +96,12 @@ void Management::searchSingleCourseScores() {
     }
 }
 
-Course *Management::chooseCourse(Student *student) {
-    char choice;
-    Course *courseChosen;
-    cout << "Which course do you want to choose? " << endl;
-    cout << "1. math" << endl;
-    cout << "2. algorithm" << endl;
-    cin >> choice;
-    switch (choice){
-        case '1':
-            courseChosen = &student->studentCourses[0];
-            break;
-        case '2':
-            courseChosen = &student->studentCourses[1];
-            break;
-        default:
-            cout << "Check your choice!" << endl;
+void Management::getWeightedAchievements() {
+    for(Student &student: students){
+        student.countWeightedScore();
+        student.display();
     }
-    return courseChosen;
+    store();
 }
 
 void Management::store() {
@@ -155,29 +135,14 @@ void Management::load() {
     infile.close();
 }
 
-void Management::play() {
+void Management::showAllStudents() {
     cout << "ID" << setw(16) <<  "Name" << setw(12) <<  "Math" << setw(12) << "Algorithm"<< setw(12) << "Weighted Achievements" << setw(12) << endl;
     for (Student student: students) {
         student.display();
     }
 }
 
-void Management::getWeightedAchievements() {
-    for(Student &student: students){
-        double weightedScore = 0;
-        double creditSum = 0;
-        for(const Course& course: student.studentCourses){
-            creditSum += course.credit;
-        }
-        for(const Course& course: student.studentCourses){
-            double weights = course.credit / creditSum;
-            weightedScore += course.score * weights;
-        }
-        student.weightedScore = weightedScore;
-        student.display();
-    }
-    store();
-}
+
 
 
 

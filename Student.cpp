@@ -5,6 +5,8 @@
 #include <iomanip>
 #include "Student.h"
 #include "Course.h"
+
+#define ERROR -1;
 using namespace std;
 
 Student::Student(string studentId, string studentName, vector<Course> studentCourses, double weightedScore) {
@@ -14,22 +16,73 @@ Student::Student(string studentId, string studentName, vector<Course> studentCou
     this->weightedScore = weightedScore;
 }
 
-void Student::setStudent(string studentId, string studentName) {
-    this->studentId = studentId;
-    this->studentName = studentName;
-    initCourses();
+double Student::getSingleCourseScore(const string &courseName) {
+    for (Course course: studentCourses) {
+        if (course.searchByCourseName(courseName)) {
+            return course.score;
+        }
+    }
+    return ERROR
+}
+
+void Student::countWeightedScore() {
+    double creditSum = 0;
+    double countingScore = 0;
+    for (const Course &course: studentCourses) {
+        creditSum += course.credit;
+    }
+    for (const Course &course: studentCourses) {
+        double weight = course.credit / creditSum;
+        countingScore += course.score * weight;
+        this->weightedScore = countingScore;
+    }
+}
+
+bool Student::searchByStudentId(string studentId) {
+    return this->studentId == studentId;
+}
+
+bool Student::searchByStudentName(string studentName) {
+    return this->studentName == studentName;
+}
+
+Student *Student::searchStudentByKeyword(const string &searchKeyword) {
+    if (searchByStudentId(searchKeyword) || searchByStudentName(searchKeyword)) {
+        Student *studentPtr = this;
+        return studentPtr;
+    }
+    return nullptr;
 }
 
 void Student::display() {
     cout << studentId << setw(8) << studentName << setw(8);
-    for(const Course& course: studentCourses) {
+    for (const Course &course: studentCourses) {
         cout << course.score << setw(8);
     }
     cout << weightedScore << setw(8);
     cout << endl;
 }
 
-void Student::initCourses() {
-    this->studentCourses.push_back(this->math);
-    this->studentCourses.push_back(this->algorithm);
+Course *Student::getSingleCourse() {
+    int choice;
+    Course *courseChosen;
+    cout << "Which course do you want to choose? " << endl;
+    for(int i = 0; i < studentCourses.size(); i++){
+        cout << i + 1 << "." << studentCourses[i].courseName << endl;
+    }
+    cin >> choice;
+    courseChosen = &studentCourses[choice - 1];
+//    switch (choice){
+//        case '1':
+//            courseChosen = &student->studentCourses[0];
+//            break;
+//        case '2':
+//            courseChosen = &student->studentCourses[1];
+//            break;
+//        default:
+//            cout << "Check your choice!" << endl;
+//    }
+    return courseChosen;
 }
+
+

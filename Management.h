@@ -14,16 +14,15 @@ protected:
 public:
     Management()= default;
     void addStudent();
-    void deleteStudents();
-    void searchStudents();
-    Student* searchByKeyword();
-    void alter();
-    void searchSingleCourseScores();
+    Student* searchStudentByKeyword();
+    void showSingleStudent();
+    void deleteStudent();
+    void alterScore();
+    void showSingleCourseScores();
     void getWeightedAchievements();
-    Course *chooseCourse(Student *student);
     void store();
     void load();
-    void play();
+    void showAllStudents();
 };
 
 #endif //ACHIEVEMENTMANAGEMENT_MANAGEMENT_H
