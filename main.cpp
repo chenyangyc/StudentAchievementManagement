@@ -12,15 +12,15 @@ int main()
     char choice;
     string mathScore;
     while(n--){
-        cout << "1. Add students" << endl;
-        cout << "2. Show All Students' Information" << endl;
-        cout << "3. Search Students by Id or Name" << endl;
-        cout << "4. Delete Students by Id or Name" << endl;
-        cout << "5. Alter Scores" << endl;
-        cout << "6. Single Course Ranking" << endl;
-        cout << "7. Get Weighted Score's Ranking" << endl;
-        cout << "0. Exit and store data" << endl;
-        cout << "Input your choice: ";
+        cout << "1. 添加学生" << endl;
+        cout << "2. 展示所有学生的信息" << endl;
+        cout << "3. 通过姓名或学号查询学生信息" << endl;
+        cout << "4. 通过姓名或学号删除学生信息" << endl;
+        cout << "5. 修改某学生成绩" << endl;
+        cout << "6. 单科成绩排名" << endl;
+        cout << "7. 加权成绩排名" << endl;
+        cout << "0. 安全退出" << endl;
+        cout << "请输入您的选择: ";
         choice = getchar();
         switch (choice){
             case '1':

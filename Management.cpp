@@ -8,51 +8,54 @@
 #include <iomanip>
 #include <map>
 #include <algorithm>
+#include <io.h>
 #include "Management.h"
 
 using namespace std;
 
 void Management::addStudent() {
     Student s;
-    cout << "Input the id of the student you want to add: ";
+    Course course;
+    cout << "输入您要添加的学生学号: ";
     cin >> s.studentId;
     for (Student student: students) {
         if (student.searchByStudentId(s.studentId)) {
-            cout << "This has been added before!" << endl;
+            cout << "该学生信息已经存在！" << endl;
             return;
         }
     }
-    cout << "Input the name of the student you want to add: ";
+    cout << "输入学生姓名: ";
     cin >> s.studentName;
-    cout << "Input the math score of the student you want to add: ";
-    cin >> s.math.score;
-    cout << "Input the algorithm score of the student you want to add: ";
-    cin >> s.algorithm.score;
-    s.studentCourses.push_back(s.math);
-    s.studentCourses.push_back(s.algorithm);
+    cout << "输入学生的课程数目: ";
+    cin >> s.courseNum;
+    for(int i = 0; i < s.courseNum; i++) {
+        cout << "依次输入课程名称，学分和成绩（以空格隔开）: ";
+        cin >> course.courseName >> course.credit >> course.score;
+        s.studentCourses.push_back(course);
+    }
     s.countWeightedScore();
     students.push_back(s);
-    cout << "The information of the student you added: " << endl;
+    cout << "您添加的学生信息为: " << endl;
     s.display();
     storeFile();
 }
 
 Student *Management::searchStudentByKeyword() {
     string searchKeyword;
-    cout << "Input the id or name of the student you want to deal with: ";
+    cout << "输入您想查询的学生姓名或学号: ";
     cin >> searchKeyword;
     for (Student &student: students) {
         Student *studentPtr = student.searchStudentByKeyword(searchKeyword);
         if (studentPtr != nullptr) return studentPtr;
     }
-    cout << "No result. Please check your keyword spelling." << endl;
+    cout << "无该学生，请检查您的关键字拼写" << endl;
     return nullptr;
 }
 
 void Management::showSingleStudent() {
     Student *student = searchStudentByKeyword();
     if (student != nullptr) {
-        cout << "The information you are looking for is: " << endl;
+        cout << "----------您查询的学生信息---------- " << endl;
         student->display();
         storeFile();
         return;
@@ -61,17 +64,17 @@ void Management::showSingleStudent() {
 
 void Management::deleteStudent() {
     string searchKeyword;
-    cout << "Input the id or name of the student you want to delete: ";
+    cout << "输入想删除的学生学号或姓名: ";
     cin >> searchKeyword;
     for (int i = 0; i < students.size(); i++) {
         if (students[i].searchStudentByKeyword(searchKeyword)) {
             students.erase(students.begin() + i);
-            cout << "Deleted Successfully!" << endl;
+            cout << "成功删除!" << endl;
             storeFile();
             return;
         }
     }
-    cout << "No such student! Check your keyword!" << endl;
+    cout << "没有此学生! 检查搜索关键词!" << endl;
 }
 
 void Management::alterScore() {
@@ -79,10 +82,10 @@ void Management::alterScore() {
     if(student == nullptr)  return;
     Course *courseChosen = student->getSingleCourse();
     if(courseChosen == nullptr)  return;
-    cout << "Input the " << courseChosen->courseName << " score: ";
+    cout << "输入新的" << courseChosen->courseName << "成绩: ";
     cin >> courseChosen->score;
     student->countWeightedScore();
-    cout << "After altering the score is: " << endl;
+    cout << "修改后的该生信息为: " << endl;
     student->display();
     storeFile();
 }
@@ -97,7 +100,7 @@ bool singleCmp(pair<pair<string, string>, double> &a, pair<pair<string, string>,
 
 void Management::getRankingBySingleCourseScore() {
     string searchKeyword;
-    cout << "Which course do you want to enqury?" << endl;
+    cout << "输入您想查询的课程名称：";
     cin >> searchKeyword;
     map<pair<string, string>, double> scores;
     vector<pair<pair<string, string>, double>> sortedScores;
@@ -111,7 +114,8 @@ void Management::getRankingBySingleCourseScore() {
                                   score);
     }
     sort(sortedScores.begin(), sortedScores.end(), singleCmp);
-    cout << "All scores of " << searchKeyword << " is : " << endl;
+    cout << "----------" << searchKeyword << "的成绩排名----------" << endl;
+    cout << "学号\t" << "姓名\t" << "成绩\t" << endl;
     for (auto &iter : sortedScores) {
         cout << iter.first.first << "\t" << iter.first.second << "\t" << iter.second << endl;
     }
@@ -119,7 +123,8 @@ void Management::getRankingBySingleCourseScore() {
 
 void Management::getRankingByWeightedScore() {
     vector<Student> sortedStudents;
-    for (const Student &student: students) {
+    for (Student &student: students) {
+        student.countWeightedScore();
         sortedStudents.push_back(student);
     }
     sort(sortedStudents.begin(), sortedStudents.end(), cmp);
@@ -128,17 +133,22 @@ void Management::getRankingByWeightedScore() {
     }
 }
 
-
 void Management::storeFile() {
     ofstream outfile(R"(F:\CLion\CLionProjects\AchievementManagement\StudentsInfo.txt)");
     if (!outfile) {
         cout << "No data!" << endl;
         return;
     }
-    for (Student student : students) {
-        outfile << student.studentId << " " << student.studentName << " "
-                << student.studentCourses[0].score << " " << student.studentCourses[1].score
-                << " " << student.weightedScore << endl;
+    for (int i = 0; i < students.size(); i++) {
+        outfile << students[i].studentId << " " << students[i].studentName << " " << students[i].courseNum << " ";
+        for(int j = 0; j < students[j].courseNum; j++){
+            outfile << students[i].studentCourses[j].courseName << " " << students[i].studentCourses[j].credit << " " << students[i].studentCourses[j].score << " ";
+        }
+        if(i == students.size() - 1){
+            outfile << students[i].weightedScore;
+        } else{
+            outfile << students[i].weightedScore << endl;
+        }
     }
     outfile.close();
 }
@@ -150,18 +160,28 @@ void Management::loadFile() {
         cout << "No data!" << endl;
         return;
     }
+    int coursesNum;
     double weightedScore;
     string studentId, studentName;
-    vector<Course> courses = {s.math, s.algorithm};
-    while (infile >> studentId >> studentName >> courses[0].score >> courses[1].score >> weightedScore) {
-        Student student = Student(studentId, studentName, courses, weightedScore);
+    Course course;
+    vector<Course> courses;
+
+    while(!infile.eof()){
+        infile >> studentId >> studentName >> coursesNum;
+        for(int i = 0; i < coursesNum; i++) {
+            infile >> course.courseName >> course.credit >> course.score;
+            courses.push_back(course);
+        }
+        infile >> weightedScore;
+        Student student = Student(coursesNum, studentId, studentName, courses, weightedScore);
         students.push_back(student);
+        courses.clear();
     }
     infile.close();
 }
 
 void Management::showAllStudents() {
-    cout << "ID" << setw(12) << "Name" << setw(8) << "Math" << setw(10) << "Algorithm" << setw(8) << "Weighted Achievements" << setw(30) << endl;
+    cout << "----------所有学生成绩统计----------" << endl;
     for (Student student: students) {
         student.display();
     }

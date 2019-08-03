@@ -12,14 +12,13 @@ using namespace std;
 
 class Student {
 public:
+    int courseNum;
     string studentId;
     string studentName;
     double weightedScore;
-    Course math = Course("math", 5);
-    Course algorithm = Course("algorithm", 4.5);
     vector<Course> studentCourses;
 public:
-    explicit Student(string studentId = "0", string studentName = "0", vector<Course> studentCourses = {}, double weightedScore = 0);
+    explicit Student(int courseNum = 0, string studentId = "0", string studentName = "0", vector<Course> studentCourses = {}, double weightedScore = 0);
     bool searchByStudentId(string studentId);
     bool searchByStudentName(string studentName);
     Student* searchStudentByKeyword(const string& searchKeyword);

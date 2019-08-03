@@ -9,7 +9,8 @@
 #define ERROR -1;
 using namespace std;
 
-Student::Student(string studentId, string studentName, vector<Course> studentCourses, double weightedScore) {
+Student::Student(int courseNum, string studentId, string studentName, vector<Course> studentCourses, double weightedScore) {
+    this->courseNum = courseNum;
     this->studentId = studentId;
     this->studentName = studentName;
     this->studentCourses = studentCourses;
@@ -22,7 +23,7 @@ double Student::getSingleCourseScore(const string &courseName) {
             return course.score;
         }
     }
-    cout << "No such course. Please check your spelling." << endl;
+    cout << "没有这门课程，请检查您的关键字拼写" << endl;
     return ERROR
 }
 
@@ -55,33 +56,37 @@ Student *Student::searchStudentByKeyword(const string &searchKeyword) {
     return nullptr;
 }
 
-void Student::display() {
-    cout << studentId << "\t" << studentName << "\t";
-    for (const Course &course: studentCourses) {
-        cout << course.score << "\t";
-    }
-    cout << weightedScore << endl;
-}
-
 Course *Student::getSingleCourse() {
     int choice;
     Course *courseChosen = nullptr;
-    cout << "Which course do you want to choose? " << endl;
+    cout << "您想要选择哪门课程? " << endl;
     for(int i = 0; i < studentCourses.size(); i++){
         cout << i + 1 << "." << studentCourses[i].courseName << endl;
     }
     cin >> choice;
-    switch (choice){
-        case 1:
-            courseChosen = &studentCourses[0];
-            break;
-        case 2:
-            courseChosen = &studentCourses[1];
-            break;
-        default:
-            cout << "Check your choice!" << endl;
-    }
+    courseChosen = &studentCourses[choice - 1];
+//    switch (choice){
+//        case 1:
+//            courseChosen = &studentCourses[0];
+//            break;
+//        case 2:
+//            courseChosen = &studentCourses[1];
+//            break;
+//        default:
+//            cout << "Check your choice!" << endl;
+//    }
     return courseChosen;
+}
+
+void Student::display() {
+    cout << "学生姓名：" << studentName << "\t";
+    cout << "学号：" << studentId << endl;
+    cout << " 科目" << setw(8) << "学分" << setw(8) << "成绩" << setw(8) << "绩点" << endl;
+    for (const Course &course: studentCourses) {
+        cout << course.courseName << setw(8) << course.credit << setw(8) << course.score << setw(8) << endl;
+    }
+    cout << "加权成绩：" << weightedScore << endl;
+    cout << endl;
 }
 
 
