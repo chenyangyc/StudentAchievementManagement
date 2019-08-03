@@ -7,7 +7,7 @@ int main()
 {
     //TODO: quite a lot of work
     Management management;
-    management.load();
+    management.loadFile();
     int n = 1000;
     char choice;
     string mathScore;
@@ -18,7 +18,7 @@ int main()
         cout << "4. Delete Students by Id or Name" << endl;
         cout << "5. Alter Scores" << endl;
         cout << "6. Single Course Ranking" << endl;
-        cout << "7. Get Weighted Scores" << endl;
+        cout << "7. Get Weighted Score's Ranking" << endl;
         cout << "0. Exit" << endl;
         cout << "Input your choice: ";
         choice = getchar();
@@ -42,10 +42,10 @@ int main()
                 management.showSingleCourseScores();
                 break;
             case '7':
-                management.getWeightedAchievements();
+                management.getRankingByWeightedScore();
                 break;
             case '0':
-                management.store();
+                management.storeFile();
                 return 0;
             default:
                 continue;

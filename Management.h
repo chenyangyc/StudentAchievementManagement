@@ -20,8 +20,9 @@ public:
     void alterScore();
     void showSingleCourseScores();
     void getWeightedAchievements();
-    void store();
-    void load();
+    void getRankingByWeightedScore();
+    void storeFile();
+    void loadFile();
     void showAllStudents();
 };
 

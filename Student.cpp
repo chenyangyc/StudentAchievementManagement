@@ -22,6 +22,7 @@ double Student::getSingleCourseScore(const string &courseName) {
             return course.score;
         }
     }
+    cout << "No such course. Please check your spelling." << endl;
     return ERROR
 }
 
@@ -65,23 +66,22 @@ void Student::display() {
 
 Course *Student::getSingleCourse() {
     int choice;
-    Course *courseChosen;
+    Course *courseChosen = nullptr;
     cout << "Which course do you want to choose? " << endl;
     for(int i = 0; i < studentCourses.size(); i++){
         cout << i + 1 << "." << studentCourses[i].courseName << endl;
     }
     cin >> choice;
-    courseChosen = &studentCourses[choice - 1];
-//    switch (choice){
-//        case '1':
-//            courseChosen = &student->studentCourses[0];
-//            break;
-//        case '2':
-//            courseChosen = &student->studentCourses[1];
-//            break;
-//        default:
-//            cout << "Check your choice!" << endl;
-//    }
+    switch (choice){
+        case 1:
+            courseChosen = &studentCourses[0];
+            break;
+        case 2:
+            courseChosen = &studentCourses[1];
+            break;
+        default:
+            cout << "Check your choice!" << endl;
+    }
     return courseChosen;
 }
 

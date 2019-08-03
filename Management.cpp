@@ -7,6 +7,7 @@
 #include <cstring>
 #include <iomanip>
 #include <map>
+#include <algorithm>
 #include "Management.h"
 
 using namespace std;
@@ -29,9 +30,10 @@ void Management::addStudent() {
     cin >> s.algorithm.score;
     s.studentCourses = {s.math, s.algorithm};
     students.push_back(s);
+    s.countWeightedScore();
     cout << "The information of the student you added: " << endl;
     s.display();
-    store();
+    storeFile();
 }
 
 Student *Management::searchStudentByKeyword() {
@@ -39,18 +41,18 @@ Student *Management::searchStudentByKeyword() {
     cout << "Input the id or name of the student you want to deal with: ";
     cin >> searchKeyword;
     for (Student &student: students) {
-        Student* studentPtr = student.searchStudentByKeyword(searchKeyword);
-        if(studentPtr != nullptr)   return studentPtr;
+        Student *studentPtr = student.searchStudentByKeyword(searchKeyword);
+        if (studentPtr != nullptr) return studentPtr;
     }
     return nullptr;
 }
 
 void Management::showSingleStudent() {
     Student *student = searchStudentByKeyword();
-    if(student != nullptr){
+    if (student != nullptr) {
         cout << "The information you are looking for is: " << endl;
         student->display();
-        store();
+        storeFile();
         return;
     }
 }
@@ -63,7 +65,7 @@ void Management::deleteStudent() {
         if (students[i].searchStudentByKeyword(searchKeyword)) {
             students.erase(students.begin() + i);
             cout << "Deleted Successfully!" << endl;
-            store();
+            storeFile();
             return;
         }
     }
@@ -75,36 +77,63 @@ void Management::alterScore() {
     Course *courseChosen = student->getSingleCourse();
     cout << "Input the " << courseChosen->courseName << " score: ";
     cin >> courseChosen->score;
-    getWeightedAchievements();
+    student->countWeightedScore();
     cout << "After altering the score is: " << endl;
     student->display();
-    store();
+    storeFile();
+}
+
+bool cmp(const Student &a, const Student &b) {
+    return a.weightedScore > b.weightedScore;
+}
+
+bool singleCmp(pair<pair<string, string>, double> &a, pair<pair<string, string>, double> &b) {
+    return a.second > b.second;
 }
 
 void Management::showSingleCourseScores() {
     string searchKeyword;
-    cout << "Which course do you want to query? " << endl;
+    cout << "Which course do you want to enqury?" << endl;
     cin >> searchKeyword;
-    map<double, pair<string, string>> scoreRanking;
-    for(Student student: students){
+    map<pair<string, string>, double> scores;
+    vector<pair<pair<string, string>, double>> sortedScores;
+    for (Student &student: students) {
         double score = student.getSingleCourseScore(searchKeyword);
-        scoreRanking.insert(pair<double,pair<string, string>>(score, pair<string,string>(student.studentId, student.studentName)));
+        if (score == -1)
+            return;
+        scores.insert(pair<pair<string, string>, double>(pair<string, string>(student.studentId, student.studentName),
+                                                         score));
+        sortedScores.emplace_back(pair<string, string>(student.studentId, student.studentName),
+                                  score);
     }
+    sort(sortedScores.begin(), sortedScores.end(), singleCmp);
     cout << "All scores of " << searchKeyword << " is : " << endl;
-    for(auto & iter : scoreRanking) {
-        cout << iter.second.second << "\t" << iter.second.first << "\t" << iter.first << endl;
+    for (auto &iter : sortedScores) {
+        cout << iter.first.first << "\t" << iter.first.second << "\t" << iter.second << endl;
     }
 }
 
 void Management::getWeightedAchievements() {
-    for(Student &student: students){
+    for (Student &student: students) {
         student.countWeightedScore();
         student.display();
     }
-    store();
+    storeFile();
 }
 
-void Management::store() {
+void Management::getRankingByWeightedScore() {
+    vector<Student> sortedStudents;
+    for (const Student &student: students) {
+        sortedStudents.push_back(student);
+    }
+    sort(sortedStudents.begin(), sortedStudents.end(), cmp);
+    for (auto &student: sortedStudents) {
+        cout << student.studentId << "\t" << student.studentName << "\t" << student.weightedScore << endl;
+    }
+}
+
+
+void Management::storeFile() {
     ofstream outfile(R"(F:\CLion\CLionProjects\AchievementManagement\StudentsInfo.txt)");
     if (!outfile) {
         cout << "No data!" << endl;
@@ -112,13 +141,13 @@ void Management::store() {
     }
     for (Student student : students) {
         outfile << student.studentId << " " << student.studentName << " "
-        << student.studentCourses[0].score << " " << student.studentCourses[1].score
-        << " " << student.weightedScore <<endl;
+                << student.studentCourses[0].score << " " << student.studentCourses[1].score
+                << " " << student.weightedScore << endl;
     }
     outfile.close();
 }
 
-void Management::load() {
+void Management::loadFile() {
     Student s;
     ifstream infile(R"(F:\CLion\CLionProjects\AchievementManagement\StudentsInfo.txt)");
     if (!infile.is_open()) {
@@ -136,41 +165,11 @@ void Management::load() {
 }
 
 void Management::showAllStudents() {
-    cout << "ID" << setw(16) <<  "Name" << setw(12) <<  "Math" << setw(12) << "Algorithm"<< setw(12) << "Weighted Achievements" << setw(12) << endl;
+    cout << "ID" << setw(16) << "Name" << setw(12) << "Math" << setw(12) << "Algorithm" << setw(12)
+         << "Weighted Achievements" << setw(12) << endl;
     for (Student student: students) {
         student.display();
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
