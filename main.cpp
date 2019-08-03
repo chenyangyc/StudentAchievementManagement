@@ -19,7 +19,7 @@ int main()
         cout << "5. Alter Scores" << endl;
         cout << "6. Single Course Ranking" << endl;
         cout << "7. Get Weighted Score's Ranking" << endl;
-        cout << "0. Exit" << endl;
+        cout << "0. Exit and store data" << endl;
         cout << "Input your choice: ";
         choice = getchar();
         switch (choice){
@@ -39,7 +39,7 @@ int main()
                 management.alterScore();
                 break;
             case '6':
-                management.showSingleCourseScores();
+                management.getRankingBySingleCourseScore();
                 break;
             case '7':
                 management.getRankingByWeightedScore();

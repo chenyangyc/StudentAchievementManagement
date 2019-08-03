@@ -18,8 +18,7 @@ public:
     void showSingleStudent();
     void deleteStudent();
     void alterScore();
-    void showSingleCourseScores();
-    void getWeightedAchievements();
+    void getRankingBySingleCourseScore();
     void getRankingByWeightedScore();
     void storeFile();
     void loadFile();

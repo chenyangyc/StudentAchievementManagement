@@ -56,12 +56,11 @@ Student *Student::searchStudentByKeyword(const string &searchKeyword) {
 }
 
 void Student::display() {
-    cout << studentId << setw(8) << studentName << setw(8);
+    cout << studentId << "\t" << studentName << "\t";
     for (const Course &course: studentCourses) {
-        cout << course.score << setw(8);
+        cout << course.score << "\t";
     }
-    cout << weightedScore << setw(8);
-    cout << endl;
+    cout << weightedScore << endl;
 }
 
 Course *Student::getSingleCourse() {

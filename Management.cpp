@@ -28,9 +28,10 @@ void Management::addStudent() {
     cin >> s.math.score;
     cout << "Input the algorithm score of the student you want to add: ";
     cin >> s.algorithm.score;
-    s.studentCourses = {s.math, s.algorithm};
-    students.push_back(s);
+    s.studentCourses.push_back(s.math);
+    s.studentCourses.push_back(s.algorithm);
     s.countWeightedScore();
+    students.push_back(s);
     cout << "The information of the student you added: " << endl;
     s.display();
     storeFile();
@@ -44,6 +45,7 @@ Student *Management::searchStudentByKeyword() {
         Student *studentPtr = student.searchStudentByKeyword(searchKeyword);
         if (studentPtr != nullptr) return studentPtr;
     }
+    cout << "No result. Please check your keyword spelling." << endl;
     return nullptr;
 }
 
@@ -74,7 +76,9 @@ void Management::deleteStudent() {
 
 void Management::alterScore() {
     Student *student = searchStudentByKeyword();
+    if(student == nullptr)  return;
     Course *courseChosen = student->getSingleCourse();
+    if(courseChosen == nullptr)  return;
     cout << "Input the " << courseChosen->courseName << " score: ";
     cin >> courseChosen->score;
     student->countWeightedScore();
@@ -91,7 +95,7 @@ bool singleCmp(pair<pair<string, string>, double> &a, pair<pair<string, string>,
     return a.second > b.second;
 }
 
-void Management::showSingleCourseScores() {
+void Management::getRankingBySingleCourseScore() {
     string searchKeyword;
     cout << "Which course do you want to enqury?" << endl;
     cin >> searchKeyword;
@@ -111,14 +115,6 @@ void Management::showSingleCourseScores() {
     for (auto &iter : sortedScores) {
         cout << iter.first.first << "\t" << iter.first.second << "\t" << iter.second << endl;
     }
-}
-
-void Management::getWeightedAchievements() {
-    for (Student &student: students) {
-        student.countWeightedScore();
-        student.display();
-    }
-    storeFile();
 }
 
 void Management::getRankingByWeightedScore() {
@@ -165,8 +161,7 @@ void Management::loadFile() {
 }
 
 void Management::showAllStudents() {
-    cout << "ID" << setw(16) << "Name" << setw(12) << "Math" << setw(12) << "Algorithm" << setw(12)
-         << "Weighted Achievements" << setw(12) << endl;
+    cout << "ID" << setw(12) << "Name" << setw(8) << "Math" << setw(10) << "Algorithm" << setw(8) << "Weighted Achievements" << setw(30) << endl;
     for (Student student: students) {
         student.display();
     }
