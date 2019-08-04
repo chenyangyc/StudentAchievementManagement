@@ -231,9 +231,13 @@ void Management::storeFile() {
     }
     for (int i = 0; i < students.size(); i++) {
         outfile << students[i].studentId << " " << students[i].studentName << " " << students[i].courseNum << endl;
-        for(int j = 0; j < students[i].courseNum; j++){
+        for(int j = 0; j < students[i].courseNum; j++){     //格式化存储格式
             if(i == students.size() - 1){
-                outfile << students[i].getCourseFromList(j)->courseName << " " << students[i].getCourseFromList(j)->credit << " " << students[i].getCourseFromList(j)->getScore();
+                if(j == students[i].courseNum - 1){
+                    outfile << students[i].getCourseFromList(j)->courseName << " " << students[i].getCourseFromList(j)->credit << " " << students[i].getCourseFromList(j)->getScore();
+                }else{
+                    outfile << students[i].getCourseFromList(j)->courseName << " " << students[i].getCourseFromList(j)->credit << " " << students[i].getCourseFromList(j)->getScore() << endl;
+                }
             } else{
                 outfile << students[i].getCourseFromList(j)->courseName << " " << students[i].getCourseFromList(j)->credit << " " << students[i].getCourseFromList(j)->getScore() << endl;
             }
