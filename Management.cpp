@@ -13,6 +13,8 @@
 
 using namespace std;
 
+Student* judgeReaptedName(vector<Student*> searchResults);
+
 void Management::addStudent() {
     int courseNum;
     string studentId,studentName;
@@ -95,40 +97,41 @@ void Management::deleteStudent() {
     string searchKeyword;
     cout << "输入想删除的学生学号或姓名: ";
     cin >> searchKeyword;
+    /*此处代码逻辑和searchStudentByKeyword很相似，但由于交互不同不可直接调用*/
+    vector<Student*> searchResults;
+    Student* studentPtr = nullptr;
+    for (Student &student: students) {
+        studentPtr = student.searchStudentByKeyword(searchKeyword);    //调用Student类的方法进行查询
+        if (studentPtr != nullptr) {
+            searchResults.push_back(studentPtr);
+        }
+    }
+    if(searchResults.empty()) {
+        cout << "无该学生，请检查您的关键字拼写" << endl;
+        return;
+    }
+    /*对重名做判断*/
+    studentPtr = judgeReaptedName(searchResults);
+    if(studentPtr == nullptr)   return;
+
     for (int i = 0; i < students.size(); i++) {
-        if (students[i].searchStudentByKeyword(searchKeyword)) {
+        if (students[i].searchStudentByKeyword(studentPtr->studentId)) {
             students.erase(students.begin() + i);
             cout << "成功删除!" << endl;
             storeFile();
             return;
         }
     }
-    cout << "没有此学生! 检查搜索关键词!" << endl;
 }
 
 void Management::alterScore() {
     /*调用Student类的 searchStudentByKeyword和 getSingleCourse方法确定要修改的学生和课程*/
-    vector<Student*> student = searchStudentByKeyword();
-    Student* studentPtr = nullptr;
-    if(student.empty())  return;
+    vector<Student*> searchResults = searchStudentByKeyword();
+    if(searchResults.empty()) return;
 
     /*判断学生重名的情况*/
-    if(student.size() > 1){     //判断是否有学生重名
-        int choice;
-        cout << "您想要选择的学生是？" << endl;
-        for(int i = 0; i < student.size(); i++){
-            cout << i + 1 << "." << student[i]->studentId << " " << student[i]->studentName << endl;
-        }
-        cout << "输入您的选择：" ;
-        cin >> choice;
-        if (choice < 1 || choice > student.size()){     //处理可能出现的输入错误情况，避免数组溢出的报错
-            cout << "请检查您的选择是否有误" << endl;
-            return;
-        }
-        studentPtr = student[choice - 1];      //确定所选择的学生
-    } else{
-        studentPtr = student[0];
-    }
+    Student* studentPtr = judgeReaptedName(searchResults);
+    if(studentPtr == nullptr)   return;
     /*选中学生后对课程的操作*/
     Course *courseChosen = studentPtr->getSingleCourse();
     if(courseChosen == nullptr)  return;
@@ -144,7 +147,6 @@ void Management::alterScore() {
     cout << endl;
     studentPtr->display();
     storeFile();
-    loadFile();     //更新删除学生信息后所有课程的年级平均成绩
 }
 
 /**
@@ -285,6 +287,28 @@ void Management::loadFile() {
         tempCourses.clear();
     }
     infile.close();
+}
+
+/*对重名的情况根据学号二次判断*/
+Student* judgeReaptedName(vector<Student*> searchResults){
+    Student* studentPtr;
+    if(searchResults.size() > 1){     //判断是否有学生重名
+        int choice;
+        cout << "您想要选择的学生是？" << endl;
+        for(int i = 0; i < searchResults.size(); i++){
+            cout << i + 1 << "." << searchResults[i]->studentId << " " << searchResults[i]->studentName << endl;
+        }
+        cout << "输入您的选择：" ;
+        cin >> choice;
+        if (choice < 1 || choice > searchResults.size()){     //处理可能出现的输入错误情况，避免数组溢出的报错
+            cout << "请检查您的选择是否有误" << endl;
+            return nullptr;
+        }
+        studentPtr = searchResults[choice - 1];      //确定所选择的学生
+    } else{
+        studentPtr = searchResults[0];
+    }
+    return studentPtr;
 }
 
 /*将每门出现的课程信息加入到统计所有课程信息的 map中*/
