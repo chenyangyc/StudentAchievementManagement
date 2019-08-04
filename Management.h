@@ -7,26 +7,28 @@
 
 #include <vector>
 #include <map>
-#include "Student.h"
+#include "ManageStudentMethods.h"
+#include "ManageFileMethods.h"
 
-class Management {
+class Management : public ManageStudentMethods, public ManageFileMethods {
 protected:
     vector<Student> students;
-    map<string, int> coursesNum;
     map<string, Course> courses;
 public:
     Management()= default;
-    void addStudent();
     Student* searchStudentByKeyword();
-    void showSingleStudent();
-    void deleteStudent();
-    void alterScore();
-    void getRankingBySingleCourseScore();
-    void getRankingByWeightedScore();
-    void storeFile();
-    void loadFile();
-    void showAllStudents();
-    void showAllCourses();
+    void addStudent() override ;
+    static bool cmp(Student &a, Student &b);
+    static bool singleCmp(pair<pair<string, string>, double> &a, pair<pair<string, string>, double> &b);
+    void showSingleStudent() override;
+    void deleteStudent() override;
+    void alterScore() override;
+    void getRankingBySingleCourseScore() override;
+    void getRankingByWeightedScore() override;
+    void storeFile() override;
+    void loadFile() override;
+    void showAllStudents() override;
+    void showAllCourses() override;
 };
 
 #endif //ACHIEVEMENTMANAGEMENT_MANAGEMENT_H

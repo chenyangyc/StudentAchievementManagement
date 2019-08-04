@@ -109,13 +109,13 @@ void Management::alterScore() {
     storeFile();
 }
 
-bool cmp(Student &a, Student &b) {
+bool Management::cmp(Student &a, Student &b) {
     double aws = a.getWeightedScore();
     double bws = b.getWeightedScore();
     return aws > bws;
 }
 
-bool singleCmp(pair<pair<string, string>, double> &a, pair<pair<string, string>, double> &b) {
+bool Management::singleCmp(pair<pair<string, string>, double> &a, pair<pair<string, string>, double> &b) {
     return a.second > b.second;
 }
 
@@ -242,3 +242,5 @@ void Management::showAllCourses() {
         cout << endl;
     }
 }
+
+

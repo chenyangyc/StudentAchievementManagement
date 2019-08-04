@@ -4,7 +4,17 @@
 CMakeFiles/AchievementManagement.dir/Course.cpp.obj: ../Course.cpp
 CMakeFiles/AchievementManagement.dir/Course.cpp.obj: ../Course.h
 
+CMakeFiles/AchievementManagement.dir/ManageFileMethods.cpp.obj: ../Course.h
+CMakeFiles/AchievementManagement.dir/ManageFileMethods.cpp.obj: ../ManageFileMethods.cpp
+CMakeFiles/AchievementManagement.dir/ManageFileMethods.cpp.obj: ../ManageFileMethods.h
+CMakeFiles/AchievementManagement.dir/ManageFileMethods.cpp.obj: ../Student.h
+
+CMakeFiles/AchievementManagement.dir/ManageStudentMethods.cpp.obj: ../ManageStudentMethods.cpp
+CMakeFiles/AchievementManagement.dir/ManageStudentMethods.cpp.obj: ../ManageStudentMethods.h
+
 CMakeFiles/AchievementManagement.dir/Management.cpp.obj: ../Course.h
+CMakeFiles/AchievementManagement.dir/Management.cpp.obj: ../ManageFileMethods.h
+CMakeFiles/AchievementManagement.dir/Management.cpp.obj: ../ManageStudentMethods.h
 CMakeFiles/AchievementManagement.dir/Management.cpp.obj: ../Management.cpp
 CMakeFiles/AchievementManagement.dir/Management.cpp.obj: ../Management.h
 CMakeFiles/AchievementManagement.dir/Management.cpp.obj: ../Student.h
@@ -14,6 +24,8 @@ CMakeFiles/AchievementManagement.dir/Student.cpp.obj: ../Student.cpp
 CMakeFiles/AchievementManagement.dir/Student.cpp.obj: ../Student.h
 
 CMakeFiles/AchievementManagement.dir/main.cpp.obj: ../Course.h
+CMakeFiles/AchievementManagement.dir/main.cpp.obj: ../ManageFileMethods.h
+CMakeFiles/AchievementManagement.dir/main.cpp.obj: ../ManageStudentMethods.h
 CMakeFiles/AchievementManagement.dir/main.cpp.obj: ../Management.h
 CMakeFiles/AchievementManagement.dir/main.cpp.obj: ../Student.h
 CMakeFiles/AchievementManagement.dir/main.cpp.obj: ../main.cpp

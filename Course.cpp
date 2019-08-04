@@ -10,7 +10,6 @@
 
 using namespace std;
 
-
 Course::Course(string courseName, double credit) {
     this->courseName = std::move(courseName);
     this->credit = credit;
