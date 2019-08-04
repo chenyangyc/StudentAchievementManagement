@@ -14,44 +14,49 @@
 using namespace std;
 
 void Management::addStudent() {
-    Student s;
-    Course course;
+    int courseNum;
+    string studentId,studentName;
+    vector<Course> addCourses;
     cout << "输入您要添加的学生学号: ";
-    cin >> s.studentId;
+    cin >> studentId;
     for (Student student: students) {
-        if (student.searchByStudentId(s.studentId)) {
+        if (student.searchByStudentId(studentId)) {
             cout << "该学生信息已经存在！" << endl;
             return;
         }
     }
     cout << "输入学生姓名: ";
-    cin >> s.studentName;
+    cin >> studentName;
     cout << "输入学生的课程数目: ";
-    cin >> s.courseNum;
-    for(int i = 0; i < s.courseNum; i++) {
+    cin >> courseNum;
+    for(int i = 0; i < courseNum; i++) {
         cout << "依次输入课程名称，学分和成绩（以空格隔开）: ";
-        double score;
-        cin >> course.courseName >> course.credit >> score;
-        course.setScore(score);
-        s.addCourseToList(course);
-        countCourses(course, score);
-//        if(courses.find(course.courseName) == courses.end()){
-//            courses[course.courseName] = course;
-//            courses[course.courseName].num = 1;
-//            courses[course.courseName].gpaSum = course.getGpa();
-//        } else {
-//            score += courses[course.courseName].getScore();
-//            courses[course.courseName].setScore(score);
-//            courses[course.courseName].num++;
-//            courses[course.courseName].gpaSum += course.getGpa();
-//        }
+        string courseName;
+        double score, credit;
+        cin >> courseName >> credit >> score;
+        //使用builder设计模式实例化 Course类的对象
+        Course course = CourseBuilder()
+                .courseName(courseName)
+                .credit(credit)
+                .score(score)
+                .gpa()
+                .build();
+        addCourses.push_back(course);
+        countCourses(course, score);    //统计新加入的课程信息，用以更新该课程年级平均成绩
     }
-    s.setCreditsSum();      //计算总学分
-    s.setWeightedScore();       //计算加权成绩
-    s.setGpa();         //计算平均绩点
-    students.push_back(s);
+    //使用builder设计模式实例化 Student类的对象
+    Student student = StudentBuilder()
+            .courseNum(courseNum)
+            .studentId(studentId)
+            .studentName(studentName)
+            .studentCourses(addCourses)
+            .creditsSum()
+            .weightedScore()
+            .gpa()
+            .build();
+    students.push_back(student);
     cout << "您添加的学生信息为: " << endl;
-    s.display();
+    student.display();
     storeFile();        //存储信息
 }
 
@@ -110,6 +115,7 @@ void Management::alterScore() {
     cout << "修改后的该生信息为: " << endl;
     student->display();
     storeFile();
+    loadFile();     //更新删除学生信息后所有课程的年级平均成绩
 }
 
 /**
@@ -154,8 +160,6 @@ void Management::getRankingBySingleCourseScore() {
 void Management::getRankingByWeightedScore() {
     vector<Student> sortedStudents;
     for (Student &student: students) {      //遍历获取成绩信息
-        student.setWeightedScore();
-        student.setGpa();
         sortedStudents.push_back(student);
     }
     sort(sortedStudents.begin(), sortedStudents.end(), cmp);        //重写sort进行排序
@@ -168,72 +172,10 @@ void Management::getRankingByWeightedScore() {
     storeFile();
 }
 
-void Management::storeFile() {
-    ofstream outfile(R"(F:\CLion\CLionProjects\AchievementManagement\StudentsInfo.txt)");
-    if (!outfile) {
-        cout << "No data!" << endl;
-        return;
-    }
-    for (int i = 0; i < students.size(); i++) {
-        outfile << students[i].studentId << " " << students[i].studentName << " " << students[i].courseNum << " ";
-        for(int j = 0; j < students[i].courseNum; j++){
-            outfile << students[i].getCourseFromList(j)->courseName << " " << students[i].getCourseFromList(j)->credit << " " << students[i].getCourseFromList(j)->getScore() << " ";
-        }
-        if(i == students.size() - 1){
-            outfile << students[i].getWeightedScore() << " " << students[i].getCreditsSum();
-        } else{
-            outfile << students[i].getWeightedScore() << " " << students[i].getCreditsSum() << endl;
-        }
-    }
-    outfile.close();
-}
-
-void Management::loadFile() {
-    Student s;
-    ifstream infile(R"(F:\CLion\CLionProjects\AchievementManagement\StudentsInfo.txt)");
-    if (!infile.is_open()) {
-        cout << "No data!" << endl;
-        return;
-    }
-    int coursesNumbers;
-    double weightedScore,creditSum;
-    string studentId, studentName;
-    Course course;
-    vector<Course> tempCourses;
-
-    while(!infile.eof()){
-        infile >> studentId >> studentName >> coursesNumbers;
-        for(int i = 0; i < coursesNumbers; i++) {
-            double score;
-            infile >> course.courseName >> course.credit >> score;
-            course.setScore(score);
-            course.setGpa();
-            tempCourses.push_back(course);
-            countCourses(course, score);
-//            if(courses.find(course.courseName) == courses.end()){
-//                courses[course.courseName] = course;
-//                courses[course.courseName].num = 1;
-//                courses[course.courseName].gpaSum = course.getGpa();
-//            } else {
-//                score += courses[course.courseName].getScore();
-//                courses[course.courseName].setScore(score);
-//                courses[course.courseName].num++;
-//                courses[course.courseName].gpaSum += course.getGpa();
-//            }
-        }
-        infile >> weightedScore >> creditSum;
-        Student student = Student(coursesNumbers, studentId, studentName, tempCourses, weightedScore, creditSum);
-        students.push_back(student);
-        tempCourses.clear();
-    }
-    infile.close();
-}
-
 void Management::showAllStudents() {
     cout << "----------所有学生成绩统计----------" << endl;
     cout << endl;
     for (Student& student: students) {
-        student.setGpa();
         student.display();
     }
 }
@@ -250,6 +192,66 @@ void Management::showAllCourses() {
         cout << "年级平均绩点：" << iter->second.gpaSum / iter->second.num << endl;
         cout << endl;
     }
+}
+
+void Management::storeFile() {
+    ofstream outfile(R"(F:\CLion\CLionProjects\AchievementManagement\StudentsInfo.txt)");
+    if (!outfile) {
+        cout << "No data!" << endl;
+        return;
+    }
+    for (int i = 0; i < students.size(); i++) {
+        outfile << students[i].studentId << " " << students[i].studentName << " " << students[i].courseNum << endl;
+        for(int j = 0; j < students[i].courseNum; j++){
+            if(i == students.size() - 1){
+                outfile << students[i].getCourseFromList(j)->courseName << " " << students[i].getCourseFromList(j)->credit << " " << students[i].getCourseFromList(j)->getScore();
+            } else{
+                outfile << students[i].getCourseFromList(j)->courseName << " " << students[i].getCourseFromList(j)->credit << " " << students[i].getCourseFromList(j)->getScore() << endl;
+            }
+        }
+
+    }
+    outfile.close();
+}
+
+void Management::loadFile() {
+    ifstream infile(R"(F:\CLion\CLionProjects\AchievementManagement\StudentsInfo.txt)");
+    if (!infile.is_open()) {
+        cout << "No data!" << endl;
+        return;
+    }
+    int coursesNumbers;
+    string studentId, studentName;
+    vector<Course> tempCourses;
+    courses.clear();
+    while(!infile.eof()){
+        infile >> studentId >> studentName >> coursesNumbers;
+        for(int i = 0; i < coursesNumbers; i++) {
+            string courseName;
+            double score, credit;
+            infile >> courseName >> credit >> score;
+            Course course = CourseBuilder()
+                    .courseName(courseName)
+                    .credit(credit)
+                    .score(score)
+                    .gpa()
+                    .build();
+            tempCourses.push_back(course);
+            countCourses(course, score);        //统计课程信息用以计算年级平均成绩
+        }
+        Student student = StudentBuilder()
+                .courseNum(coursesNumbers)
+                .studentId(studentId)
+                .studentName(studentName)
+                .studentCourses(tempCourses)
+                .creditsSum()
+                .weightedScore()
+                .gpa()
+                .build();
+        students.push_back(student);
+        tempCourses.clear();
+    }
+    infile.close();
 }
 
 /*将每门出现的课程信息加入到统计所有课程信息的 map中*/

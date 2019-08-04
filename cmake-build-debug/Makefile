@@ -149,6 +149,33 @@ Course.cpp.s:
 	$(MAKE) -f CMakeFiles\AchievementManagement.dir\build.make CMakeFiles/AchievementManagement.dir/Course.cpp.s
 .PHONY : Course.cpp.s
 
+CourseBuilder.obj: CourseBuilder.cpp.obj
+
+.PHONY : CourseBuilder.obj
+
+# target to build an object file
+CourseBuilder.cpp.obj:
+	$(MAKE) -f CMakeFiles\AchievementManagement.dir\build.make CMakeFiles/AchievementManagement.dir/CourseBuilder.cpp.obj
+.PHONY : CourseBuilder.cpp.obj
+
+CourseBuilder.i: CourseBuilder.cpp.i
+
+.PHONY : CourseBuilder.i
+
+# target to preprocess a source file
+CourseBuilder.cpp.i:
+	$(MAKE) -f CMakeFiles\AchievementManagement.dir\build.make CMakeFiles/AchievementManagement.dir/CourseBuilder.cpp.i
+.PHONY : CourseBuilder.cpp.i
+
+CourseBuilder.s: CourseBuilder.cpp.s
+
+.PHONY : CourseBuilder.s
+
+# target to generate assembly for a file
+CourseBuilder.cpp.s:
+	$(MAKE) -f CMakeFiles\AchievementManagement.dir\build.make CMakeFiles/AchievementManagement.dir/CourseBuilder.cpp.s
+.PHONY : CourseBuilder.cpp.s
+
 Management.obj: Management.cpp.obj
 
 .PHONY : Management.obj
@@ -203,6 +230,33 @@ Student.cpp.s:
 	$(MAKE) -f CMakeFiles\AchievementManagement.dir\build.make CMakeFiles/AchievementManagement.dir/Student.cpp.s
 .PHONY : Student.cpp.s
 
+StudentBuilder.obj: StudentBuilder.cpp.obj
+
+.PHONY : StudentBuilder.obj
+
+# target to build an object file
+StudentBuilder.cpp.obj:
+	$(MAKE) -f CMakeFiles\AchievementManagement.dir\build.make CMakeFiles/AchievementManagement.dir/StudentBuilder.cpp.obj
+.PHONY : StudentBuilder.cpp.obj
+
+StudentBuilder.i: StudentBuilder.cpp.i
+
+.PHONY : StudentBuilder.i
+
+# target to preprocess a source file
+StudentBuilder.cpp.i:
+	$(MAKE) -f CMakeFiles\AchievementManagement.dir\build.make CMakeFiles/AchievementManagement.dir/StudentBuilder.cpp.i
+.PHONY : StudentBuilder.cpp.i
+
+StudentBuilder.s: StudentBuilder.cpp.s
+
+.PHONY : StudentBuilder.s
+
+# target to generate assembly for a file
+StudentBuilder.cpp.s:
+	$(MAKE) -f CMakeFiles\AchievementManagement.dir\build.make CMakeFiles/AchievementManagement.dir/StudentBuilder.cpp.s
+.PHONY : StudentBuilder.cpp.s
+
 main.obj: main.cpp.obj
 
 .PHONY : main.obj
@@ -242,12 +296,18 @@ help:
 	@echo ... Course.obj
 	@echo ... Course.i
 	@echo ... Course.s
+	@echo ... CourseBuilder.obj
+	@echo ... CourseBuilder.i
+	@echo ... CourseBuilder.s
 	@echo ... Management.obj
 	@echo ... Management.i
 	@echo ... Management.s
 	@echo ... Student.obj
 	@echo ... Student.i
 	@echo ... Student.s
+	@echo ... StudentBuilder.obj
+	@echo ... StudentBuilder.i
+	@echo ... StudentBuilder.s
 	@echo ... main.obj
 	@echo ... main.i
 	@echo ... main.s

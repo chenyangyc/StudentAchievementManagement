@@ -108,12 +108,40 @@ CMakeFiles/AchievementManagement.dir/Course.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/AchievementManagement.dir/Course.cpp.s"
 	C:\PROGRA~2\MINGW-~1\I686-8~1.0-P\mingw32\bin\C__~1.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S F:\CLion\CLionProjects\AchievementManagement\Course.cpp -o CMakeFiles\AchievementManagement.dir\Course.cpp.s
 
+CMakeFiles/AchievementManagement.dir/StudentBuilder.cpp.obj: CMakeFiles/AchievementManagement.dir/flags.make
+CMakeFiles/AchievementManagement.dir/StudentBuilder.cpp.obj: ../StudentBuilder.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=F:\CLion\CLionProjects\AchievementManagement\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/AchievementManagement.dir/StudentBuilder.cpp.obj"
+	C:\PROGRA~2\MINGW-~1\I686-8~1.0-P\mingw32\bin\C__~1.EXE  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\AchievementManagement.dir\StudentBuilder.cpp.obj -c F:\CLion\CLionProjects\AchievementManagement\StudentBuilder.cpp
+
+CMakeFiles/AchievementManagement.dir/StudentBuilder.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/AchievementManagement.dir/StudentBuilder.cpp.i"
+	C:\PROGRA~2\MINGW-~1\I686-8~1.0-P\mingw32\bin\C__~1.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E F:\CLion\CLionProjects\AchievementManagement\StudentBuilder.cpp > CMakeFiles\AchievementManagement.dir\StudentBuilder.cpp.i
+
+CMakeFiles/AchievementManagement.dir/StudentBuilder.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/AchievementManagement.dir/StudentBuilder.cpp.s"
+	C:\PROGRA~2\MINGW-~1\I686-8~1.0-P\mingw32\bin\C__~1.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S F:\CLion\CLionProjects\AchievementManagement\StudentBuilder.cpp -o CMakeFiles\AchievementManagement.dir\StudentBuilder.cpp.s
+
+CMakeFiles/AchievementManagement.dir/CourseBuilder.cpp.obj: CMakeFiles/AchievementManagement.dir/flags.make
+CMakeFiles/AchievementManagement.dir/CourseBuilder.cpp.obj: ../CourseBuilder.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=F:\CLion\CLionProjects\AchievementManagement\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/AchievementManagement.dir/CourseBuilder.cpp.obj"
+	C:\PROGRA~2\MINGW-~1\I686-8~1.0-P\mingw32\bin\C__~1.EXE  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\AchievementManagement.dir\CourseBuilder.cpp.obj -c F:\CLion\CLionProjects\AchievementManagement\CourseBuilder.cpp
+
+CMakeFiles/AchievementManagement.dir/CourseBuilder.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/AchievementManagement.dir/CourseBuilder.cpp.i"
+	C:\PROGRA~2\MINGW-~1\I686-8~1.0-P\mingw32\bin\C__~1.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E F:\CLion\CLionProjects\AchievementManagement\CourseBuilder.cpp > CMakeFiles\AchievementManagement.dir\CourseBuilder.cpp.i
+
+CMakeFiles/AchievementManagement.dir/CourseBuilder.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/AchievementManagement.dir/CourseBuilder.cpp.s"
+	C:\PROGRA~2\MINGW-~1\I686-8~1.0-P\mingw32\bin\C__~1.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S F:\CLion\CLionProjects\AchievementManagement\CourseBuilder.cpp -o CMakeFiles\AchievementManagement.dir\CourseBuilder.cpp.s
+
 # Object files for target AchievementManagement
 AchievementManagement_OBJECTS = \
 "CMakeFiles/AchievementManagement.dir/main.cpp.obj" \
 "CMakeFiles/AchievementManagement.dir/Student.cpp.obj" \
 "CMakeFiles/AchievementManagement.dir/Management.cpp.obj" \
-"CMakeFiles/AchievementManagement.dir/Course.cpp.obj"
+"CMakeFiles/AchievementManagement.dir/Course.cpp.obj" \
+"CMakeFiles/AchievementManagement.dir/StudentBuilder.cpp.obj" \
+"CMakeFiles/AchievementManagement.dir/CourseBuilder.cpp.obj"
 
 # External object files for target AchievementManagement
 AchievementManagement_EXTERNAL_OBJECTS =
@@ -122,11 +150,13 @@ AchievementManagement.exe: CMakeFiles/AchievementManagement.dir/main.cpp.obj
 AchievementManagement.exe: CMakeFiles/AchievementManagement.dir/Student.cpp.obj
 AchievementManagement.exe: CMakeFiles/AchievementManagement.dir/Management.cpp.obj
 AchievementManagement.exe: CMakeFiles/AchievementManagement.dir/Course.cpp.obj
+AchievementManagement.exe: CMakeFiles/AchievementManagement.dir/StudentBuilder.cpp.obj
+AchievementManagement.exe: CMakeFiles/AchievementManagement.dir/CourseBuilder.cpp.obj
 AchievementManagement.exe: CMakeFiles/AchievementManagement.dir/build.make
 AchievementManagement.exe: CMakeFiles/AchievementManagement.dir/linklibs.rsp
 AchievementManagement.exe: CMakeFiles/AchievementManagement.dir/objects1.rsp
 AchievementManagement.exe: CMakeFiles/AchievementManagement.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=F:\CLion\CLionProjects\AchievementManagement\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Linking CXX executable AchievementManagement.exe"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=F:\CLion\CLionProjects\AchievementManagement\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Linking CXX executable AchievementManagement.exe"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles\AchievementManagement.dir\link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

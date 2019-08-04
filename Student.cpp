@@ -9,15 +9,8 @@
 #define ERROR -1;
 using namespace std;
 
-Student::Student(int courseNum, string studentId, string studentName, vector<Course> studentCourses,
-                 double weightedScore,
-                 double creditsSum) {
-    this->courseNum = courseNum;
-    this->studentId = studentId;
-    this->studentName = studentName;
-    this->studentCourses = studentCourses;
-    this->weightedScore = weightedScore;
-    this->creditsSum = creditsSum;
+Student::Student() {
+    //使用builder设计模式来构建对象，因此构造函数不需要具体内容
 }
 
 void Student::setWeightedScore() {
@@ -116,4 +109,12 @@ void Student::display() {
     }
     cout << "加权成绩：" << weightedScore << "\t" << "总绩点：" << Gpa << "\t" << "总学分: " << creditsSum << endl;
     cout << endl;
+}
+
+void Student::setCourseList(vector<Course> studentCourses) {
+    this->studentCourses = studentCourses;
+}
+
+vector<Course> Student::getCourseList() {
+    return this->studentCourses;
 }

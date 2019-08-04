@@ -19,8 +19,7 @@ private:
     double weightedScore, creditsSum, Gpa;      //加权成绩、总学分和平均绩点
     vector<Course> studentCourses;      // 拥有的课程的列表
 public:
-    explicit Student(int courseNum = 0, string studentId = "0", string studentName = "0", vector<Course> studentCourses = {}, double weightedScore = 0,
-                     double creditsSum = 0);
+    Student();
     /* 对封装起来的成员变量的 set和 get操作*/
     void setWeightedScore();
     double getWeightedScore();
@@ -30,6 +29,8 @@ public:
     double getGpa();
     void addCourseToList(Course& course);
     Course* getCourseFromList(int i);
+    void setCourseList(vector<Course> studentCourses);
+    vector<Course> getCourseList();
     /*对学生和课程的查找*/
     bool searchByStudentId(string studentId);
     bool searchByStudentName(string studentName);

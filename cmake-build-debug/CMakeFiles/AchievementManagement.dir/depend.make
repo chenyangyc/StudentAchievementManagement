@@ -4,21 +4,32 @@
 CMakeFiles/AchievementManagement.dir/Course.cpp.obj: ../Course.cpp
 CMakeFiles/AchievementManagement.dir/Course.cpp.obj: ../Course.h
 
+CMakeFiles/AchievementManagement.dir/CourseBuilder.cpp.obj: ../Course.h
+CMakeFiles/AchievementManagement.dir/CourseBuilder.cpp.obj: ../CourseBuilder.cpp
+CMakeFiles/AchievementManagement.dir/CourseBuilder.cpp.obj: ../CourseBuilder.h
+
 CMakeFiles/AchievementManagement.dir/Management.cpp.obj: ../Course.h
-CMakeFiles/AchievementManagement.dir/Management.cpp.obj: ../ManageFileMethods.h
-CMakeFiles/AchievementManagement.dir/Management.cpp.obj: ../ManageStudentMethods.h
+CMakeFiles/AchievementManagement.dir/Management.cpp.obj: ../CourseBuilder.h
+CMakeFiles/AchievementManagement.dir/Management.cpp.obj: ../ManageMethods.h
 CMakeFiles/AchievementManagement.dir/Management.cpp.obj: ../Management.cpp
 CMakeFiles/AchievementManagement.dir/Management.cpp.obj: ../Management.h
 CMakeFiles/AchievementManagement.dir/Management.cpp.obj: ../Student.h
+CMakeFiles/AchievementManagement.dir/Management.cpp.obj: ../StudentBuilder.h
 
 CMakeFiles/AchievementManagement.dir/Student.cpp.obj: ../Course.h
 CMakeFiles/AchievementManagement.dir/Student.cpp.obj: ../Student.cpp
 CMakeFiles/AchievementManagement.dir/Student.cpp.obj: ../Student.h
 
+CMakeFiles/AchievementManagement.dir/StudentBuilder.cpp.obj: ../Course.h
+CMakeFiles/AchievementManagement.dir/StudentBuilder.cpp.obj: ../Student.h
+CMakeFiles/AchievementManagement.dir/StudentBuilder.cpp.obj: ../StudentBuilder.cpp
+CMakeFiles/AchievementManagement.dir/StudentBuilder.cpp.obj: ../StudentBuilder.h
+
 CMakeFiles/AchievementManagement.dir/main.cpp.obj: ../Course.h
-CMakeFiles/AchievementManagement.dir/main.cpp.obj: ../ManageFileMethods.h
-CMakeFiles/AchievementManagement.dir/main.cpp.obj: ../ManageStudentMethods.h
+CMakeFiles/AchievementManagement.dir/main.cpp.obj: ../CourseBuilder.h
+CMakeFiles/AchievementManagement.dir/main.cpp.obj: ../ManageMethods.h
 CMakeFiles/AchievementManagement.dir/main.cpp.obj: ../Management.h
 CMakeFiles/AchievementManagement.dir/main.cpp.obj: ../Student.h
+CMakeFiles/AchievementManagement.dir/main.cpp.obj: ../StudentBuilder.h
 CMakeFiles/AchievementManagement.dir/main.cpp.obj: ../main.cpp
 

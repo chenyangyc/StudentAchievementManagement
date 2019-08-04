@@ -7,5 +7,5 @@ add_executable(AchievementManagement main.cpp
         Student.cpp Student.h
         Management.cpp Management.h
         Course.cpp Course.h
-        ManageStudentMethods.h
-        ManageFileMethods.h)
+        ManageMethods.h
+        StudentBuilder.cpp StudentBuilder.h CourseBuilder.cpp CourseBuilder.h)

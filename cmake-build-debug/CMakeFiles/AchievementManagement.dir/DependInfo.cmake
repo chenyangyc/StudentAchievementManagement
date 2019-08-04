@@ -5,8 +5,10 @@ set(CMAKE_DEPENDS_LANGUAGES
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
   "F:/CLion/CLionProjects/AchievementManagement/Course.cpp" "F:/CLion/CLionProjects/AchievementManagement/cmake-build-debug/CMakeFiles/AchievementManagement.dir/Course.cpp.obj"
+  "F:/CLion/CLionProjects/AchievementManagement/CourseBuilder.cpp" "F:/CLion/CLionProjects/AchievementManagement/cmake-build-debug/CMakeFiles/AchievementManagement.dir/CourseBuilder.cpp.obj"
   "F:/CLion/CLionProjects/AchievementManagement/Management.cpp" "F:/CLion/CLionProjects/AchievementManagement/cmake-build-debug/CMakeFiles/AchievementManagement.dir/Management.cpp.obj"
   "F:/CLion/CLionProjects/AchievementManagement/Student.cpp" "F:/CLion/CLionProjects/AchievementManagement/cmake-build-debug/CMakeFiles/AchievementManagement.dir/Student.cpp.obj"
+  "F:/CLion/CLionProjects/AchievementManagement/StudentBuilder.cpp" "F:/CLion/CLionProjects/AchievementManagement/cmake-build-debug/CMakeFiles/AchievementManagement.dir/StudentBuilder.cpp.obj"
   "F:/CLion/CLionProjects/AchievementManagement/main.cpp" "F:/CLion/CLionProjects/AchievementManagement/cmake-build-debug/CMakeFiles/AchievementManagement.dir/main.cpp.obj"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")

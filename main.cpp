@@ -11,7 +11,7 @@ int main()
     char choice;
     string mathScore;
     while(true){
-        system("cls");
+        cout << "--------------学生成绩管理系统----------------" << endl;
         cout << "1. 添加学生" << endl;
         cout << "2. 展示所有学生信息" << endl;
         cout << "3. 通过姓名或学号查询学生信息" << endl;
@@ -23,6 +23,7 @@ int main()
         cout << "0. 安全退出" << endl;
         cout << "请输入您的选择: ";
         choice = getchar();
+        cout << endl;
         switch (choice){
             case '1':
                 management.addStudent();
@@ -55,8 +56,6 @@ int main()
                 continue;
         }
         cout << endl;
-        cout << "----------按回车键以继续----------" << endl;
         getchar();
     }
-    return 0;
 }
