@@ -86,13 +86,7 @@
 		<Unit filename="F:/CLion/CLionProjects/AchievementManagement/Course.h">
 			<Option target="AchievementManagement"/>
 		</Unit>
-		<Unit filename="F:/CLion/CLionProjects/AchievementManagement/ManageFileMethods.cpp">
-			<Option target="AchievementManagement"/>
-		</Unit>
 		<Unit filename="F:/CLion/CLionProjects/AchievementManagement/ManageFileMethods.h">
-			<Option target="AchievementManagement"/>
-		</Unit>
-		<Unit filename="F:/CLion/CLionProjects/AchievementManagement/ManageStudentMethods.cpp">
 			<Option target="AchievementManagement"/>
 		</Unit>
 		<Unit filename="F:/CLion/CLionProjects/AchievementManagement/ManageStudentMethods.h">

@@ -16,10 +16,11 @@ protected:
     map<string, Course> courses;
 public:
     Management()= default;
-    Student* searchStudentByKeyword();
+    Student* searchStudentByKeyword();      //根据姓名或学号搜索学生信息
+    /* 将每门出现的课程信息加入到统计所有课程信息的 map中*/
+    void countCourses(Course course, double score);
+    /*以下均为继承接口后重写的方法*/
     void addStudent() override ;
-    static bool cmp(Student &a, Student &b);
-    static bool singleCmp(pair<pair<string, string>, double> &a, pair<pair<string, string>, double> &b);
     void showSingleStudent() override;
     void deleteStudent() override;
     void alterScore() override;

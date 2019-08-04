@@ -8,10 +8,10 @@ int main()
     //TODO: quite a lot of work
     Management management;
     management.loadFile();
-    int n = 1000;
     char choice;
     string mathScore;
-    while(n--){
+    while(true){
+        system("cls");
         cout << "1. 添加学生" << endl;
         cout << "2. 展示所有学生信息" << endl;
         cout << "3. 通过姓名或学号查询学生信息" << endl;
@@ -55,7 +55,7 @@ int main()
                 continue;
         }
         cout << endl;
-        cout << "----------Press Enter to Continue----------" << endl;
+        cout << "----------按回车键以继续----------" << endl;
         getchar();
     }
     return 0;

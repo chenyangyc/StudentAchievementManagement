@@ -22,7 +22,7 @@ Student::Student(int courseNum, string studentId, string studentName, vector<Cou
 
 void Student::setWeightedScore() {
     double countingScore = 0;
-    for (Course &course: studentCourses) {
+    for (Course &course: studentCourses) {  //对所有拥有课程进行遍历，得到成绩的对应的学分进行计算
         double weight = course.credit / creditsSum;
         countingScore += course.getScore() * weight;
     }
@@ -35,7 +35,7 @@ double Student::getWeightedScore() {
 
 void Student::setCreditsSum() {
     double creditSum = 0;
-    for (const Course &course: studentCourses) {
+    for (const Course &course: studentCourses) {    //对所有拥有课程进行遍历，得到对应的学分
         creditSum += course.credit;
     }
     this->creditsSum = creditSum;
@@ -47,8 +47,8 @@ double Student::getCreditsSum() {
 
 void Student::setGpa() {
     this->Gpa = 0;
-    for (int i = 0; i < studentCourses.size(); i++) {
-        this->Gpa += studentCourses[i].getGpa() * studentCourses[i].credit / creditsSum;
+    for (int i = 0; i < studentCourses.size(); i++) {   //对所有拥有课程进行遍历，调用getGpa得到每门课的绩点
+        this->Gpa += studentCourses[i].getGpa() * studentCourses[i].credit / creditsSum;    //因为封装了gpa变量，所以调用getGpa
     }
 }
 
@@ -56,20 +56,20 @@ double Student::getGpa() {
     return this->Gpa;
 }
 
-void Student::addCourseToList(Course &course) {
+void Student::addCourseToList(Course &course) {     //向课程列表添加课程
     course.setGpa();
     this->studentCourses.push_back(course);
 }
 
-Course *Student::getCourseFromList(int i) {
+Course *Student::getCourseFromList(int i) {     //从课程列表得到课程
     if (i >= 0 && i < studentCourses.size())
         return &studentCourses[i];
     return nullptr;
 }
 
-double Student::getSingleCourseScore(const string &courseName) {
+double Student::getSingleCourseScore(const string &courseName) {    //查询单门课程成绩
     for (Course course: studentCourses) {
-        if (course.searchByCourseName(courseName)) {
+        if (course.searchByCourseName(courseName)) {    //searchByCourseName是 Course类的方法
             return course.getScore();
         }
     }
@@ -93,7 +93,7 @@ Student *Student::searchStudentByKeyword(const string &searchKeyword) {
     return nullptr;
 }
 
-Course *Student::getSingleCourse() {
+Course *Student::getSingleCourse() {        //搜索单门课程并返回指向它的指针
     int choice;
     Course *courseChosen = nullptr;
     cout << "您想要选择哪门课程? " << endl;

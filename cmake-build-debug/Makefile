@@ -149,60 +149,6 @@ Course.cpp.s:
 	$(MAKE) -f CMakeFiles\AchievementManagement.dir\build.make CMakeFiles/AchievementManagement.dir/Course.cpp.s
 .PHONY : Course.cpp.s
 
-ManageFileMethods.obj: ManageFileMethods.cpp.obj
-
-.PHONY : ManageFileMethods.obj
-
-# target to build an object file
-ManageFileMethods.cpp.obj:
-	$(MAKE) -f CMakeFiles\AchievementManagement.dir\build.make CMakeFiles/AchievementManagement.dir/ManageFileMethods.cpp.obj
-.PHONY : ManageFileMethods.cpp.obj
-
-ManageFileMethods.i: ManageFileMethods.cpp.i
-
-.PHONY : ManageFileMethods.i
-
-# target to preprocess a source file
-ManageFileMethods.cpp.i:
-	$(MAKE) -f CMakeFiles\AchievementManagement.dir\build.make CMakeFiles/AchievementManagement.dir/ManageFileMethods.cpp.i
-.PHONY : ManageFileMethods.cpp.i
-
-ManageFileMethods.s: ManageFileMethods.cpp.s
-
-.PHONY : ManageFileMethods.s
-
-# target to generate assembly for a file
-ManageFileMethods.cpp.s:
-	$(MAKE) -f CMakeFiles\AchievementManagement.dir\build.make CMakeFiles/AchievementManagement.dir/ManageFileMethods.cpp.s
-.PHONY : ManageFileMethods.cpp.s
-
-ManageStudentMethods.obj: ManageStudentMethods.cpp.obj
-
-.PHONY : ManageStudentMethods.obj
-
-# target to build an object file
-ManageStudentMethods.cpp.obj:
-	$(MAKE) -f CMakeFiles\AchievementManagement.dir\build.make CMakeFiles/AchievementManagement.dir/ManageStudentMethods.cpp.obj
-.PHONY : ManageStudentMethods.cpp.obj
-
-ManageStudentMethods.i: ManageStudentMethods.cpp.i
-
-.PHONY : ManageStudentMethods.i
-
-# target to preprocess a source file
-ManageStudentMethods.cpp.i:
-	$(MAKE) -f CMakeFiles\AchievementManagement.dir\build.make CMakeFiles/AchievementManagement.dir/ManageStudentMethods.cpp.i
-.PHONY : ManageStudentMethods.cpp.i
-
-ManageStudentMethods.s: ManageStudentMethods.cpp.s
-
-.PHONY : ManageStudentMethods.s
-
-# target to generate assembly for a file
-ManageStudentMethods.cpp.s:
-	$(MAKE) -f CMakeFiles\AchievementManagement.dir\build.make CMakeFiles/AchievementManagement.dir/ManageStudentMethods.cpp.s
-.PHONY : ManageStudentMethods.cpp.s
-
 Management.obj: Management.cpp.obj
 
 .PHONY : Management.obj
@@ -296,12 +242,6 @@ help:
 	@echo ... Course.obj
 	@echo ... Course.i
 	@echo ... Course.s
-	@echo ... ManageFileMethods.obj
-	@echo ... ManageFileMethods.i
-	@echo ... ManageFileMethods.s
-	@echo ... ManageStudentMethods.obj
-	@echo ... ManageStudentMethods.i
-	@echo ... ManageStudentMethods.s
 	@echo ... Management.obj
 	@echo ... Management.i
 	@echo ... Management.s

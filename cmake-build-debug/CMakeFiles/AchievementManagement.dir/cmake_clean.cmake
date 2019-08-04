@@ -3,8 +3,6 @@ file(REMOVE_RECURSE
   "CMakeFiles/AchievementManagement.dir/Student.cpp.obj"
   "CMakeFiles/AchievementManagement.dir/Management.cpp.obj"
   "CMakeFiles/AchievementManagement.dir/Course.cpp.obj"
-  "CMakeFiles/AchievementManagement.dir/ManageStudentMethods.cpp.obj"
-  "CMakeFiles/AchievementManagement.dir/ManageFileMethods.cpp.obj"
   "AchievementManagement.pdb"
   "AchievementManagement.exe"
   "AchievementManagement.exe.manifest"
