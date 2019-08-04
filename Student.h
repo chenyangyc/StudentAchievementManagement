@@ -34,9 +34,9 @@ public:
     /*对学生和课程的查找*/
     bool searchByStudentId(string studentId);
     bool searchByStudentName(string studentName);
-    Student* searchStudentByKeyword(const string& searchKeyword);
-    Course* getSingleCourse();
-    double getSingleCourseScore(const string& courseName);
+    Student* searchStudentByKeyword(const string& searchKeyword);   //搜索学生信息
+    Course* getSingleCourse();      //搜索单门课程
+    double getSingleCourseScore(const string& courseName);      //得到单门课程的成绩
     /*展示所有学生的信息*/
     void display();
 };
