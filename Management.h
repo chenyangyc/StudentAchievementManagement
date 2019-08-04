@@ -18,7 +18,7 @@ protected:
 public:
     Management() = default;
 
-    Student *searchStudentByKeyword();      //根据姓名或学号搜索学生信息
+    vector<Student*> searchStudentByKeyword();      //根据姓名或学号搜索学生信息
     /* 将每门出现的课程信息加入到统计所有课程信息的 map中*/
     void countCourses(Course course, double score);
 

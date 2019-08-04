@@ -94,7 +94,10 @@ Course *Student::getSingleCourse() {        //搜索单门课程并返回指向它的指针
         cout << i + 1 << "." << studentCourses[i].courseName << endl;
     }
     cin >> choice;
-    if (choice < 1 || choice > studentCourses.size()) return nullptr;
+    if (choice < 1 || choice > studentCourses.size()) {
+        cout << "请检查您的选择" << endl;
+        return nullptr;
+    }
     courseChosen = &studentCourses[choice - 1];
     return courseChosen;
 }

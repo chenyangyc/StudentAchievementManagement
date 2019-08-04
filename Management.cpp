@@ -60,24 +60,32 @@ void Management::addStudent() {
     storeFile();        //存储信息
 }
 
-Student *Management::searchStudentByKeyword() {
+/*使用vector来做到学生重名时课展示所有查询结果*/
+vector<Student*> Management::searchStudentByKeyword() {
     string searchKeyword;
     cout << "输入您想查询的学生姓名或学号: ";
     cin >> searchKeyword;
+    vector<Student*> searchResults;
     for (Student &student: students) {
         Student *studentPtr = student.searchStudentByKeyword(searchKeyword);    //调用Student类的方法进行查询
-        if (studentPtr != nullptr) return studentPtr;
+        if (studentPtr != nullptr) {
+            searchResults.push_back(studentPtr);
+        }
     }
-    cout << "无该学生，请检查您的关键字拼写" << endl;
-    return nullptr;
+    if(searchResults.empty()){
+        cout << "无该学生，请检查您的关键字拼写" << endl;
+    }
+    return searchResults;
 }
 
 void Management::showSingleStudent() {
-    Student *student = searchStudentByKeyword();        //调用Student类的 searchStudentByKeyword方法进行查询
-    if (student != nullptr) {
+    vector<Student*> student = searchStudentByKeyword();        //调用Student类的 searchStudentByKeyword方法进行查询
+    if (! student.empty()) {
         cout << "----------您查询的学生信息---------- " << endl;
         cout << endl;
-        student->display();
+        for(int i = 0; i < student.size(); i++){
+            student[i]->display();
+        }
         storeFile();
         return;
     }
@@ -100,9 +108,29 @@ void Management::deleteStudent() {
 
 void Management::alterScore() {
     /*调用Student类的 searchStudentByKeyword和 getSingleCourse方法确定要修改的学生和课程*/
-    Student *student = searchStudentByKeyword();
-    if(student == nullptr)  return;
-    Course *courseChosen = student->getSingleCourse();
+    vector<Student*> student = searchStudentByKeyword();
+    Student* studentPtr = nullptr;
+    if(student.empty())  return;
+
+    /*判断学生重名的情况*/
+    if(student.size() > 1){     //判断是否有学生重名
+        int choice;
+        cout << "您想要选择的学生是？" << endl;
+        for(int i = 0; i < student.size(); i++){
+            cout << i + 1 << "." << student[i]->studentId << " " << student[i]->studentName << endl;
+        }
+        cout << "输入您的选择：" ;
+        cin >> choice;
+        if (choice < 1 || choice > student.size()){     //处理可能出现的输入错误情况，避免数组溢出的报错
+            cout << "请检查您的选择是否有误" << endl;
+            return;
+        }
+        studentPtr = student[choice - 1];      //确定所选择的学生
+    } else{
+        studentPtr = student[0];
+    }
+    /*选中学生后对课程的操作*/
+    Course *courseChosen = studentPtr->getSingleCourse();
     if(courseChosen == nullptr)  return;
     cout << "输入新的" << courseChosen->courseName << "成绩: ";
     double score;
@@ -110,10 +138,11 @@ void Management::alterScore() {
     /*对课程设置成绩和绩点， 对学生计算加权和绩点*/
     courseChosen->setScore(score);
     courseChosen->setGpa();
-    student->setWeightedScore();
-    student->setGpa();
-    cout << "修改后的该生信息为: " << endl;
-    student->display();
+    studentPtr->setWeightedScore();
+    studentPtr->setGpa();
+    cout << "--------修改后的该生信息为----------- " << endl;
+    cout << endl;
+    studentPtr->display();
     storeFile();
     loadFile();     //更新删除学生信息后所有课程的年级平均成绩
 }
