@@ -6,7 +6,6 @@
 #include "Student.h"
 #include "Course.h"
 
-#define ERROR -1;
 using namespace std;
 
 Student::Student() {
@@ -66,8 +65,7 @@ double Student::getSingleCourseScore(const string &courseName) {    //查询单门课
             return course.getScore();
         }
     }
-    cout << "没有这门课程，请检查您的关键字拼写" << endl;
-    return ERROR
+    return 0;
 }
 
 bool Student::searchByStudentId(string studentId) {

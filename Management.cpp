@@ -171,8 +171,8 @@ void Management::getRankingBySingleCourseScore() {
     /*遍历学生列表获取成绩信息*/
     for (Student &student: students) {
         double score = student.getSingleCourseScore(searchKeyword);
-        if (score == -1)
-            return;
+        if (score == 0)
+            continue;
         scores.insert(pair<pair<string, string>, double>(pair<string, string>(student.studentId, student.studentName),
                                                          score));
         sortedScores.emplace_back(pair<string, string>(student.studentId, student.studentName),
