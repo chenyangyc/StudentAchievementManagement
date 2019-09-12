@@ -1,4 +1,4 @@
-# MFC_StudentAchievementManagement
+# StudentAchievementManagement
 ### An achievements management system for students, developed in C++14.
 
 ### 学生成绩管理系统
